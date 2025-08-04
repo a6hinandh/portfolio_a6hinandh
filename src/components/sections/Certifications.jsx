@@ -1,0 +1,61 @@
+import Carousel from './components/Carousel'
+import { FiCode, FiGlobe } from 'react-icons/fi'
+
+function Certifications() {
+  const certificationItems = [
+    {
+      title: "Complete Full Stack Web Development Bootcamp",
+      description: "Comprehensive bootcamp covering frontend and backend development technologies.",
+      id: 3,
+      icon: <FiGlobe className="carousel-icon" />,
+      issuer: "Udemy",
+      date: "July 2025",
+      certificateImage: "./udemy1.jpg", // Adjust path as needed
+    },
+    {
+      title: "Flutter & Dart - The Complete Guide [2025 Edition]",
+      description: "Comprehensive course covering fundamentals of Flutter & Dart.",
+      id: 2,
+      icon: <FiGlobe className="carousel-icon" />,
+      issuer: "Udemy",
+      date: "Aug 2025",
+      certificateImage: "./udemy2.jpg", // Adjust path as needed
+    },
+    {
+      title: "Programming in Modern C++",
+      description: "Comprehensive course covering modern C++ programming concepts and best practices from NPTEL.",
+      id: 1,
+      icon: <FiCode className="carousel-icon" />,
+      issuer: "NPTEL",
+      date: "May 2025",
+      certificateImage: "./nptel1.jpg", // Adjust path as needed
+    }
+  ];
+
+  return (
+    <div className="content">
+      <h1>Certifications</h1>
+      <p>Professional certifications and credentials I've earned in technology and development.</p>
+      <div style={{ 
+        height: '400px', // Reduced height
+        position: 'relative', 
+        marginTop: '2rem', // Slightly reduced left margin
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center'
+      }}>
+        <Carousel
+          items={certificationItems}
+          baseWidth={500} // Increased width from 400 to 500
+          autoplay={true}
+          autoplayDelay={4000}
+          pauseOnHover={true}
+          loop={true}
+          round={false}
+        />
+      </div>
+    </div>
+  )
+}
+
+export default Certifications

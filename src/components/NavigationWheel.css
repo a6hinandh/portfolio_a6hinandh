@@ -1,0 +1,207 @@
+/* Container styling */
+.circular-nav-container {
+  position: relative;
+  width: 400px;
+  height: 400px;
+  margin: 50px auto;
+  background-color: transparent;
+}
+
+/* Center circle styling */
+.center-circle {
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background-color: #6b7280;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  z-index: 10;
+  color: white;
+  font-size: 2rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.center-circle:hover {
+  background-color: #4b5563;
+  transform: translate(-50%, -50%) scale(1.1);
+}
+
+/* Base styling for all segments */
+.first, .second, .third, .fourth, .fifth, .sixth, .seventh, .eighth {
+  position: absolute;
+  width: 400px;
+  height: 400px;
+  top: 0;
+  left: 0;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  /* Add pointer-events: none to the base, then enable on hover */
+  pointer-events: none;
+}
+
+/* Enable pointer events for the visible parts */
+.segment {
+  pointer-events: none;
+  
+}
+
+/* Segment content positioning */
+.segment-content {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: #293342;
+  font-size: 1.4rem;
+  font-weight: 500;
+  text-align: center;
+  pointer-events: auto; /* Enable clicking on content */
+  user-select: none;
+  width: 80px;
+  height: 60px;
+  z-index: 5;
+  
+}
+
+.segment-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* Each piece is 40 degrees, starting 2.5 degrees after its rotation point */
+.first {
+  background: conic-gradient(from 2.5deg, #e5e7eb 0deg, #95b2ec 40deg, transparent 40deg);
+  mask: radial-gradient(circle, transparent 100px, black 100px, black 200px, transparent 200px);
+  -webkit-mask: radial-gradient(circle, transparent 100px, black 100px, black 200px, transparent 200px);
+  z-index: 1;
+}
+
+.first .segment-content {
+  top: 38px;
+  left: 64%;
+  transform: translateX(-50%);
+}
+
+.second {
+  background: conic-gradient(from 47.5deg, #e5e7eb 0deg, #95b2ec 40deg, transparent 40deg);
+  mask: radial-gradient(circle, transparent 100px, black 100px, black 200px, transparent 200px);
+  -webkit-mask: radial-gradient(circle, transparent 100px, black 100px, black 200px, transparent 200px);
+  z-index: 1;
+}
+
+.second .segment-content {
+  top: 120px;
+  right: 20px;
+  transform: none;
+}
+
+.third {
+  background: conic-gradient(from 92.5deg, #e5e7eb 0deg, #95b2ec 40deg, transparent 40deg);
+  mask: radial-gradient(circle, transparent 100px, black 100px, black 200px, transparent 200px);
+  -webkit-mask: radial-gradient(circle, transparent 100px, black 100px, black 200px, transparent 200px);
+  z-index: 1;
+}
+
+.third .segment-content {
+  top: 260px;
+  right: 20px;
+  transform: translateY(-50%);
+}
+
+.fourth {
+  background: conic-gradient(from 137.5deg, #e5e7eb 0deg, #95b2ec 40deg, transparent 40deg);
+  mask: radial-gradient(circle, transparent 100px, black 100px, black 200px, transparent 200px);
+  -webkit-mask: radial-gradient(circle, transparent 100px, black 100px, black 200px, transparent 200px);
+  z-index: 1;
+}
+
+.fourth .segment-content {
+  bottom: 25px;
+  right: 100px;
+  transform: none;
+}
+
+.fifth {
+  background: conic-gradient(from 182.5deg, #e5e7eb 0deg, #95b2ec 40deg, transparent 40deg);
+  mask: radial-gradient(circle, transparent 100px, black 100px, black 200px, transparent 200px);
+  -webkit-mask: radial-gradient(circle, transparent 100px, black 100px, black 200px, transparent 200px);
+  z-index: 1;
+}
+
+.fifth .segment-content {
+  bottom: 25px;
+  left: 145px;
+  transform: translateX(-50%);
+}
+
+.sixth {
+  background: conic-gradient(from 227.5deg, #e5e7eb 0deg, #95b2ec 40deg, transparent 40deg);
+  mask: radial-gradient(circle, transparent 100px, black 100px, black 200px, transparent 200px);
+  -webkit-mask: radial-gradient(circle, transparent 100px, black 100px, black 200px, transparent 200px);
+  z-index: 1;
+}
+
+.sixth .segment-content {
+  bottom: 105px;
+  left: 25px;
+  transform: none;
+}
+
+.seventh {
+  background: conic-gradient(from 272.5deg, #e5e7eb 0deg, #95b2ec 40deg, transparent 40deg);
+  mask: radial-gradient(circle, transparent 100px, black 100px, black 200px, transparent 200px);
+  -webkit-mask: radial-gradient(circle, transparent 100px, black 100px, black 200px, transparent 200px);
+  z-index: 1;
+}
+
+.seventh .segment-content {
+  top: 150px;
+  left: 20px;
+  transform: translateY(-50%);
+}
+
+.eighth {
+  background: conic-gradient(from 317.5deg, #e5e7eb 0deg, #95b2ec 40deg, transparent 40deg);
+  mask: radial-gradient(circle, transparent 100px, black 100px, black 200px, transparent 200px);
+  -webkit-mask: radial-gradient(circle, transparent 100px, black 100px, black 200px, transparent 200px);
+  z-index: 1;
+}
+
+.eighth .segment-content {
+  top: 38px;
+  left: 108px;
+  transform: none;
+}
+
+/* Hover effects */
+.segment:hover {
+  background: conic-gradient(from var(--start-angle, 2.5deg), #d1d5db 0deg, #1a417c 40deg, transparent 40deg) !important;
+  transform: scale(1.1);
+  z-index: 2;
+}
+
+.first:hover { --start-angle: 2.5deg; }
+.second:hover { --start-angle: 47.5deg; }
+.third:hover { --start-angle: 92.5deg; }
+.fourth:hover { --start-angle: 137.5deg; }
+.fifth:hover { --start-angle: 182.5deg; }
+.sixth:hover { --start-angle: 227.5deg; }
+.seventh:hover { --start-angle: 272.5deg; }
+.eighth:hover { --start-angle: 317.5deg; }
+
+img {
+  width: 150px;
+  border-radius: 50%;
+  box-shadow: #ffffff;
+}

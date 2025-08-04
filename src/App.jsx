@@ -1,34 +1,64 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { useState, useEffect } from 'react'
 import './App.css'
+import CircularNavigation from './components/NavigationWheel'
+import Intro from './components/sections/Intro'
+import Resume from './components/sections/Resume'
+import Projects from './components/sections/Projects'
+import TechTools from './components/sections/TechTools'
+import About from './components/sections/About'
+import Education from './components/sections/Education'
+import Contact from './components/sections/Contact'
+import Certifications from './components/sections/Certifications'
+import LearningJourney from './components/sections/LearningJourney'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [activeSection, setActiveSection] = useState('intro')
+  const [previousSection, setPreviousSection] = useState('intro')
+  const [isTransitioning, setIsTransitioning] = useState(false)
+
+  const renderSection = (section) => {
+    switch (section) {
+      case 'resume': return <Resume />
+      case 'projects': return <Projects />
+      case 'tech': return <TechTools />
+      case 'about': return <About />
+      case 'education': return <Education />
+      case 'contact': return <Contact />
+      case 'certifications': return <Certifications />
+      case 'learning': return <LearningJourney />
+      default: return <Intro />
+    }
+  }
+
+  const handleSectionChange = (newSection) => {
+    if (newSection !== activeSection) {
+      setPreviousSection(activeSection)
+      setIsTransitioning(true)
+      
+      // After animation completes, update the active section
+      setTimeout(() => {
+        setActiveSection(newSection)
+        setIsTransitioning(false)
+      }, 400) // Half of the transition duration
+    }
+  }
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div className="container">
+      <div className="left-section">
+        <CircularNavigation setActiveSection={handleSectionChange} />
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
+      <div className="right-section">
+        <div className={`cube-container ${isTransitioning ? 'rotating' : ''}`}>
+          <div className="cube-face front">
+            {renderSection(isTransitioning ? previousSection : activeSection)}
+          </div>
+          <div className="cube-face back">
+            {renderSection(isTransitioning ? activeSection : previousSection)}
+          </div>
+        </div>
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    </div>
   )
 }
 
