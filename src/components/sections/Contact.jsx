@@ -1,56 +1,70 @@
-function Contact() {
+import React, { useState } from 'react';
+
+function ContactForm() {
+  const [formData, setFormData] = useState({ name: '', email: '', message: '' });
+  const [status, setStatus] = useState('');
+
+  const backendUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000';
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setStatus('Sending...');
+
+    try {
+      const res = await fetch(`${backendUrl}/api/contact`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
+      });
+
+      if (res.ok) {
+        setStatus('Message sent successfully!');
+        setFormData({ name: '', email: '', message: '' });
+      } else {
+        setStatus('Failed to send message.');
+      }
+    } catch (err) {
+      console.error(err);
+      setStatus('Error sending message.');
+    }
+  };
+
   return (
-    <div className="content">
-      <h1>Contact</h1>
-      <p>Get in touch with me for collaborations, opportunities, or just to say hello!</p>
-      <div className="placeholder-content">
-        <p><em>Contact information will be added soon...</em></p>
-        <div className="coming-soon">
-          <h3>Contact Methods:</h3>
-          <ul>
-            <li>Email Address</li>
-            <li>LinkedIn Profile</li>
-            <li>GitHub Profile</li>
-            <li>Portfolio Website</li>
-            <li>Social Media Links</li>
-            <li>Contact Form</li>
-          </ul>
-        </div>
-      </div>
-      <style jsx>{`
-        .placeholder-content {
-          margin-top: 2rem;
-          padding: 1.5rem;
-          border: 2px dashed rgba(245, 245, 220, 0.3);
-          border-radius: 8px;
-          background: rgba(245, 245, 220, 0.05);
-        }
-        
-        .coming-soon h3 {
-          color: #f5f5dc;
-          margin-bottom: 1rem;
-        }
-        
-        .coming-soon ul {
-          list-style-type: none;
-          padding-left: 0;
-        }
-        
-        .coming-soon li {
-          margin: 0.5rem 0;
-          padding-left: 1rem;
-          position: relative;
-        }
-        
-        .coming-soon li::before {
-          content: "▸";
-          position: absolute;
-          left: 0;
-          color: #f5f5dc;
-        }
-      `}</style>
-    </div>
-  )
+    <form onSubmit={handleSubmit}>
+      <input
+        type="text"
+        name="name"
+        placeholder="Your Name"
+        value={formData.name}
+        onChange={handleChange}
+        required
+      />
+      <input
+        type="email"
+        name="email"
+        placeholder="Your Email"
+        value={formData.email}
+        onChange={handleChange}
+        required
+      />
+      <textarea
+        name="message"
+        placeholder="Write your message here… let’s create something awesome together!"
+        value={formData.message}
+        onChange={handleChange}
+        required
+      ></textarea>
+      <button type="submit">Send</button>
+      {status && <p>{status}</p>}
+    </form>
+  );
 }
 
-export default Contact
+export default ContactForm;

@@ -1,6 +1,6 @@
 function Education() {
   return (
-    <div className="content">
+    <div className="education-content">
       <h1>Education</h1>
       <p>My academic background and formal learning journey.</p>
       
@@ -51,7 +51,7 @@ function Education() {
       </div>
 
       <style jsx>{`
-        .content {
+        .education-content {
           padding: 0.5rem;
           height: 100%;
           display: flex;
@@ -60,12 +60,12 @@ function Education() {
           overflow: hidden;
         }
 
-        .content h1 {
+        .education-content h1 {
           margin: 0 0 0.5rem 0;
           font-size: 2rem;
         }
 
-        .content p {
+        .education-content p {
           margin: 0 0 1rem 0;
           font-size: 0.9rem;
         }
@@ -184,7 +184,7 @@ function Education() {
             padding: 0.8rem 1rem;
           }
 
-          .content h1 {
+          .education-content h1 {
             font-size: 1.6rem;
           }
         }

@@ -1,5 +1,6 @@
 import React from 'react';
 import { FaUser, FaFileAlt, FaProjectDiagram, FaTools, FaInfoCircle, FaGraduationCap, FaPhone, FaCertificate } from 'react-icons/fa';
+import ContactLinks from './ContactLinks';
 import './NavigationWheel.css';
 
 function CircularNavigation({ setActiveSection }) {
@@ -16,6 +17,9 @@ function CircularNavigation({ setActiveSection }) {
 
   return (
     <div className="circular-nav-container">
+      {/* Contact Links positioned above the wheel */}
+      <ContactLinks />
+      
       {/* Center circle */}
       <div 
         className="center-circle"
