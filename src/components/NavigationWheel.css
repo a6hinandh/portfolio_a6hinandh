@@ -50,7 +50,6 @@
 /* Enable pointer events for the visible parts */
 .segment {
   pointer-events: none;
-  
 }
 
 /* Segment content positioning */
@@ -70,7 +69,6 @@
   width: 80px;
   height: 60px;
   z-index: 5;
-  
 }
 
 .segment-label {
@@ -204,4 +202,215 @@ img {
   width: 150px;
   border-radius: 50%;
   box-shadow: #ffffff;
+}
+
+/* ===== RESPONSIVE DESIGN ===== */
+
+/* Tablet breakpoint */
+@media (max-width: 1024px) {
+  .circular-nav-container {
+    width: 350px;
+    height: 350px;
+    margin: 30px auto;
+  }
+
+  .first, .second, .third, .fourth, .fifth, .sixth, .seventh, .eighth {
+    width: 350px;
+    height: 350px;
+  }
+
+  .center-circle {
+    width: 85px;
+    height: 85px;
+  }
+
+  .center-circle img {
+    width: 120px;
+  }
+
+  .segment-content {
+    width: 70px;
+    height: 55px;
+    font-size: 1.2rem;
+  }
+
+  .segment-label {
+    font-size: 0.7rem;
+  }
+
+  /* Adjust segment positioning for smaller wheel */
+  .first .segment-content { top: 35px; left: 64%; }
+  .second .segment-content { top: 100px; right: 18px; }
+  .third .segment-content { top: 220px; right: 18px; }
+  .fourth .segment-content { bottom: 22px; right: 85px; }
+  .fifth .segment-content { bottom: 22px; left: 125px; }
+  .sixth .segment-content { bottom: 90px; left: 22px; }
+  .seventh .segment-content { top: 130px; left: 18px; }
+  .eighth .segment-content { top: 35px; left: 95px; }
+}
+
+/* Mobile breakpoint */
+@media (max-width: 768px) {
+  .circular-nav-container {
+    width: 280px;
+    height: 280px;
+    margin: 20px auto 10px auto;
+  }
+
+  .first, .second, .third, .fourth, .fifth, .sixth, .seventh, .eighth {
+    width: 280px;
+    height: 280px;
+  }
+
+  .center-circle {
+    width: 70px;
+    height: 70px;
+    font-size: 1.5rem;
+  }
+
+  .center-circle img {
+    width: 95px;
+  }
+
+  .segment-content {
+    width: 60px;
+    height: 50px;
+    font-size: 1rem;
+    gap: 4px;
+  }
+
+  .segment-label {
+    font-size: 0.6rem;
+    line-height: 1.2;
+  }
+
+  /* Adjust mask for smaller wheel */
+  .first, .second, .third, .fourth, .fifth, .sixth, .seventh, .eighth {
+    mask: radial-gradient(circle, transparent 70px, black 70px, black 140px, transparent 140px);
+    -webkit-mask: radial-gradient(circle, transparent 70px, black 70px, black 140px, transparent 140px);
+  }
+
+  /* Adjust segment positioning for mobile wheel */
+  .first .segment-content { top: 25px; left: 64%; }
+  .second .segment-content { top: 75px; right: 15px; }
+  .third .segment-content { top: 170px; right: 15px; }
+  .fourth .segment-content { bottom: 18px; right: 68px; }
+  .fifth .segment-content { bottom: 18px; left: 98px; }
+  .sixth .segment-content { bottom: 70px; left: 18px; }
+  .seventh .segment-content { top: 105px; left: 15px; }
+  .eighth .segment-content { top: 25px; left: 75px; }
+
+  /* Reduce hover scale effect on mobile */
+  .segment:hover {
+    transform: scale(1.05);
+  }
+}
+
+/* Small mobile breakpoint */
+@media (max-width: 480px) {
+  .circular-nav-container {
+    width: 250px;
+    height: 250px;
+    margin: 15px auto 5px auto;
+  }
+
+  .first, .second, .third, .fourth, .fifth, .sixth, .seventh, .eighth {
+    width: 250px;
+    height: 250px;
+  }
+
+  .center-circle {
+    width: 60px;
+    height: 60px;
+    font-size: 1.2rem;
+  }
+
+  .center-circle img {
+    width: 80px;
+  }
+
+  .segment-content {
+    width: 50px;
+    height: 45px;
+    font-size: 0.9rem;
+    gap: 3px;
+  }
+
+  .segment-label {
+    font-size: 0.55rem;
+    line-height: 1.1;
+  }
+
+  /* Adjust mask for smaller wheel */
+  .first, .second, .third, .fourth, .fifth, .sixth, .seventh, .eighth {
+    mask: radial-gradient(circle, transparent 60px, black 60px, black 125px, transparent 125px);
+    -webkit-mask: radial-gradient(circle, transparent 60px, black 60px, black 125px, transparent 125px);
+  }
+
+  /* Adjust segment positioning for small mobile wheel */
+  .first .segment-content { top: 22px; left: 64%; }
+  .second .segment-content { top: 65px; right: 12px; }
+  .third .segment-content { top: 150px; right: 12px; }
+  .fourth .segment-content { bottom: 15px; right: 60px; }
+  .fifth .segment-content { bottom: 15px; left: 88px; }
+  .sixth .segment-content { bottom: 62px; left: 15px; }
+  .seventh .segment-content { top: 92px; left: 12px; }
+  .eighth .segment-content { top: 22px; left: 67px; }
+
+  /* Further reduce hover effect */
+  .segment:hover {
+    transform: scale(1.02);
+  }
+}
+
+/* Very small screens */
+@media (max-width: 320px) {
+  .circular-nav-container {
+    width: 220px;
+    height: 220px;
+    margin: 10px auto 5px auto;
+  }
+
+  .first, .second, .third, .fourth, .fifth, .sixth, .seventh, .eighth {
+    width: 220px;
+    height: 220px;
+  }
+
+  .center-circle {
+    width: 50px;
+    height: 50px;
+    font-size: 1rem;
+  }
+
+  .center-circle img {
+    width: 70px;
+  }
+
+  .segment-content {
+    width: 45px;
+    height: 40px;
+    font-size: 0.8rem;
+    gap: 2px;
+  }
+
+  .segment-label {
+    font-size: 0.5rem;
+    line-height: 1;
+  }
+
+  /* Adjust mask for very small wheel */
+  .first, .second, .third, .fourth, .fifth, .sixth, .seventh, .eighth {
+    mask: radial-gradient(circle, transparent 50px, black 50px, black 110px, transparent 110px);
+    -webkit-mask: radial-gradient(circle, transparent 50px, black 50px, black 110px, transparent 110px);
+  }
+
+  /* Adjust segment positioning for very small wheel */
+  .first .segment-content { top: 20px; left: 64%; }
+  .second .segment-content { top: 58px; right: 10px; }
+  .third .segment-content { top: 132px; right: 10px; }
+  .fourth .segment-content { bottom: 13px; right: 53px; }
+  .fifth .segment-content { bottom: 13px; left: 78px; }
+  .sixth .segment-content { bottom: 55px; left: 13px; }
+  .seventh .segment-content { top: 82px; left: 10px; }
+  .eighth .segment-content { top: 20px; left: 60px; }
 }

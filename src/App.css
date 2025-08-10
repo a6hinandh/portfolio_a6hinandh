@@ -213,18 +213,190 @@ p {
   background: rgba(245, 245, 220, 0.5);
 }
 
-/* Responsive for mobile: stack vertically */
-@media (max-width: 768px) {
-  .container {
-    flex-direction: column;
-  }
+.intro{
+  margin-top: 50%;
+}
 
+/* ===== RESPONSIVE DESIGN ===== */
+
+/* Tablet breakpoint */
+@media (max-width: 1024px) {
   .left-section, .right-section {
-    height: 50vh;
-    border-bottom: 1px solid rgba(245, 245, 220, 0.1);
+    padding: 1.5rem;
+  }
+  
+  .navigation-hint {
+    margin-top: 300px;
+    font-size: 0.8rem;
   }
 }
 
-.intro{
-  margin-top: 50%;
+/* Mobile and small tablet breakpoint */
+@media (max-width: 768px) {
+  html, body, #root {
+    overflow: auto;
+    height: auto; /* Allow scrolling on mobile */
+  }
+
+  .container {
+    flex-direction: column;
+    height: auto;
+    overflow: visible;
+  }
+
+  .left-section {
+    height: auto;
+    min-height: unset; /* Ensure wheel section has enough space */
+    max-height: unset; /* Prevent it from taking too much space */
+    padding: 1rem;
+    border-bottom: 2px solid rgba(245, 245, 220, 0.2);
+    margin-bottom: 0;
+    justify-content: center;
+    align-items: center;
+    order: 1; /* Ensure left section comes first */
+  }
+
+  .right-section {
+    height: auto;
+    min-height: 60vh; /* Ensure content section has enough space */
+    padding: 1rem;
+    overflow-y: auto;
+    overflow-x: hidden;
+    order: 2; /* Ensure right section comes second */
+    position: relative;
+  }
+
+  /* Adjust glass background for mobile */
+  .right-section::before {
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
+    border-radius: 15px;
+  }
+
+  /* Mobile content adjustments */
+  .content {
+    max-width: 95%;
+    padding: 0.5rem;
+    height: auto;
+    min-height: 50vh;
+  }
+
+  .scrollable-content {
+    max-width: 95%;
+    padding: 0.5rem;
+    height: auto;
+    min-height: 50vh;
+  }
+
+  /* Adjust intro positioning for mobile */
+  .intro {
+    margin-top: 10%;
+  }
+
+  /* Adjust navigation hint for mobile */
+  .navigation-hint {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    margin: 0;
+    font-size: 0.7rem;
+    text-align: center;
+    width: 90%;
+  }
+
+  /* Headings adjustment for mobile */
+  h1 {
+    font-size: 1.5rem;
+  }
+  
+  h2 {
+    font-size: 1.2rem;
+  }
+
+  /* Exploring list adjustments */
+  .exploring-list li {
+    font-size: 1rem;
+    margin: 0.6rem 0;
+  }
+
+  .ai-statement {
+    margin: 1rem 0;
+    padding: 0.8rem;
+    font-size: 0.9rem;
+  }
+}
+
+/* Small mobile breakpoint */
+@media (max-width: 480px) {
+  .left-section {
+    min-height: 50vh;
+    max-height: 70vh;
+    padding: 0.5rem;
+  }
+
+  .right-section {
+    min-height: 50vh;
+    padding: 0.5rem;
+  }
+
+  .right-section::before {
+    top: 5px;
+    left: 5px;
+    right: 5px;
+    bottom: 5px;
+    border-radius: 10px;
+  }
+
+  .content, .scrollable-content {
+    padding: 0.3rem;
+  }
+
+  h1 {
+    font-size: 1.3rem;
+  }
+  
+  h2 {
+    font-size: 1.1rem;
+  }
+
+  .exploring-list li {
+    font-size: 0.9rem;
+  }
+
+  .ai-statement {
+    padding: 0.6rem;
+    font-size: 0.8rem;
+  }
+
+  .navigation-hint {
+    font-size: 0.65rem;
+  }
+}
+
+/* Very small screens */
+@media (max-width: 320px) {
+  .left-section {
+    min-height: 45vh;
+    padding: 0.3rem;
+  }
+
+  .right-section {
+    min-height: 45vh;
+    padding: 0.3rem;
+  }
+
+  h1 {
+    font-size: 1.1rem;
+  }
+  
+  h2 {
+    font-size: 1rem;
+  }
+
+  .navigation-hint {
+    font-size: 0.6rem;
+  }
 }

@@ -5,7 +5,7 @@
   left: 53%;
   transform: translateX(-50%);
   width: 100%;
-  max-width: 300px; /* Reduced width for 4 buttons */
+  max-width: 300px; /* Reduced width for 3 buttons */
   padding: 20px 0;
   z-index: 5;
 }
@@ -13,7 +13,7 @@
 /* Grid layout for contact links */
 .contact-links-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr); /* Changed to 4 columns for 4 buttons */
+  grid-template-columns: repeat(3, 1fr); /* 3 columns for 3 buttons */
   gap: 40px; /* Increased gap for better spacing */
   justify-items: center;
   padding: 0 20px;
@@ -88,7 +88,6 @@
 .contact-link:nth-child(1) { animation-delay: 0.1s; }
 .contact-link:nth-child(2) { animation-delay: 0.2s; }
 .contact-link:nth-child(3) { animation-delay: 0.3s; }
-.contact-link:nth-child(4) { animation-delay: 0.4s; }
 
 @keyframes fadeInUp {
   to {
@@ -97,25 +96,105 @@
   }
 }
 
-/* Responsive adjustments */
-@media (max-width: 768px) {
+/* ===== RESPONSIVE DESIGN ===== */
+
+/* Tablet breakpoint */
+@media (max-width: 1024px) {
   .contact-links-container {
-    position: relative;
-    top: -60px; /* Less spacing on mobile */
-    left: auto;
-    transform: none;
-    margin-bottom: 10px;
+    top: -100px;
+    max-width: 280px;
   }
   
   .contact-links-grid {
-    grid-template-columns: repeat(4, 1fr);
-    gap: 15px;
-    padding: 0 10px;
+    gap: 35px;
+    padding: 0 15px;
+  }
+  
+  .contact-link {
+    width: 45px;
+    height: 45px;
+    font-size: 1.2rem;
+  }
+}
+
+/* Mobile breakpoint */
+@media (max-width: 768px) {
+  .contact-links-container {
+    position: relative;
+    top: -40px;
+    left: auto;
+    transform: none;
+    margin-bottom: 10px;
+    max-width: 100%;
+    padding: 10px 0;
+  }
+  
+  .contact-links-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+    padding: 0 20px;
+    max-width: 250px;
+    margin: 0 auto;
   }
   
   .contact-link {
     width: 40px;
     height: 40px;
     font-size: 1.1rem;
+  }
+
+  /* Reduce hover effects on mobile */
+  .contact-link:hover {
+    transform: translateY(-2px) scale(1.05);
+  }
+}
+
+/* Small mobile breakpoint */
+@media (max-width: 480px) {
+  .contact-links-container {
+    top: -30px;
+    padding: 8px 0;
+  }
+  
+  .contact-links-grid {
+    gap: 20px;
+    padding: 0 15px;
+    max-width: 200px;
+  }
+  
+  .contact-link {
+    width: 35px;
+    height: 35px;
+    font-size: 1rem;
+  }
+
+  /* Further reduce hover effects */
+  .contact-link:hover {
+    transform: translateY(-1px) scale(1.02);
+  }
+}
+
+/* Very small screens */
+@media (max-width: 320px) {
+  .contact-links-container {
+    top: -25px;
+    padding: 5px 0;
+  }
+  
+  .contact-links-grid {
+    gap: 15px;
+    padding: 0 10px;
+    max-width: 180px;
+  }
+  
+  .contact-link {
+    width: 32px;
+    height: 32px;
+    font-size: 0.9rem;
+  }
+
+  /* Minimal hover effects for very small screens */
+  .contact-link:hover {
+    transform: scale(1.01);
   }
 }
