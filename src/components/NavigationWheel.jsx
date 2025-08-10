@@ -1,5 +1,5 @@
 import React from 'react';
-import { FaUser, FaFileAlt, FaProjectDiagram, FaTools, FaInfoCircle, FaGraduationCap, FaPhone, FaCertificate } from 'react-icons/fa';
+import { FaUser, FaFileAlt, FaProjectDiagram, FaTools, FaInfoCircle, FaGraduationCap, FaPhone, FaCertificate, FaBook } from 'react-icons/fa';
 import ContactLinks from './ContactLinks';
 import './NavigationWheel.css';
 
@@ -12,7 +12,7 @@ function CircularNavigation({ setActiveSection }) {
     { id: 'education', icon: <FaGraduationCap />, label: 'Education' },
     { id: 'contact', icon: <FaPhone />, label: 'Contact' },
     { id: 'certifications', icon: <FaCertificate />, label: 'Certifications' },
-    { id: 'learning', icon: <FaUser />, label: 'Learning Journey' }, // Using FaUser as placeholder
+    { id: 'learning', icon: <FaBook />, label: 'Academics' }, // Using FaUser as placeholder
   ];
 
   return (

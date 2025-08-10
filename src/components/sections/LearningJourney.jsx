@@ -1,56 +1,154 @@
+import { FaCheckCircle, FaHourglassHalf } from "react-icons/fa";
+
 function LearningJourney() {
+  const categorizedCourses = [
+    {
+      category: "Programming & Software Development",
+      courses: [
+        { name: "IT Workshop 3 (Python)", status: "ongoing" },
+        { name: "IT Workshop 2 (Java & PHP)", status: "completed" },
+        { name: "IT Workshop 1 (HTML, CSS, JS)", status: "completed" },
+        { name: "Computer Programming", status: "completed" },
+      ],
+    },
+    {
+      category: "Computer Science Foundations",
+      courses: [
+        { name: "Data Structures 1", status: "completed" },
+        { name: "Data Structures 2", status: "ongoing" },
+        { name: "Design and Analysis of Algorithms", status: "ongoing" },
+        { name: "Theory of Computation", status: "ongoing" },
+        { name: "Computer Organization", status: "completed" },
+        { name: "Discrete Mathematics", status: "completed" },
+      ],
+    },
+    {
+      category: "Data & AI",
+      courses: [
+        { name: "Database Management System", status: "ongoing" },
+        { name: "Probability, Statistics and Random Processes", status: "ongoing" },
+        { name: "Introduction to Cognitive Science", status: "ongoing" },
+      ],
+    },
+    {
+      category: "Electronics & Hardware Systems",
+      courses: [
+        { name: "Electronic Circuits", status: "completed" },
+        { name: "Digital Design and Electric Circuits", status: "completed" },
+      ],
+    },
+    {
+      category: "Mathematics & Applied Sciences",
+      courses: [
+        { name: "Calculus and Linear Algebra", status: "completed" },
+      ],
+    },
+    {
+      category: "Communication & Personal Development",
+      courses: [
+        { name: "Communication Skills", status: "completed" },
+        { name: "Foreign Language (German)", status: "completed" },
+        { name: "Personality Development", status: "completed" },
+      ],
+    },
+  ];
+
   return (
-    <div className="content">
-      <h1>Learning Journey</h1>
-      <p>My continuous learning path, current studies, and future learning goals.</p>
-      <div className="placeholder-content">
-        <p><em>Learning journey details will be added soon...</em></p>
-        <div className="coming-soon">
-          <h3>Learning Focus Areas:</h3>
-          <ul>
-            <li>Current Learning Projects</li>
-            <li>Online Courses & MOOCs</li>
-            <li>Books & Resources</li>
-            <li>Skill Development Timeline</li>
-            <li>Future Learning Goals</li>
-            <li>Knowledge Sharing</li>
-          </ul>
-        </div>
+    <div className="scrollable-content">
+      <div className="coursework-section">
+        <h1>Coursework & Academics</h1>
+        <p className="section-intro">
+          Core subjects I have completed or am currently pursuing as part of my B.Tech in CSE (AI & DS) at IIIT Kottayam.
+        </p>
+
+        {categorizedCourses.map((section, idx) => (
+          <div key={idx} className="category-section">
+            <h2 className="category-title">{section.category}</h2>
+            <div className="courses-grid">
+              {section.courses.map((course, index) => (
+                <div key={index} className="course-card">
+                  <div className="course-name">{course.name}</div>
+                  <div
+                    className={`course-status ${course.status}`}
+                    title={course.status === "ongoing" ? "In Progress" : "Completed"}
+                  >
+                    {course.status === "completed" ? (
+                      <>
+                        <FaCheckCircle /> Completed
+                      </>
+                    ) : (
+                      <>
+                        <FaHourglassHalf /> In Progress
+                      </>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        ))}
       </div>
+
       <style jsx>{`
-        .placeholder-content {
-          margin-top: 2rem;
-          padding: 1.5rem;
-          border: 2px dashed rgba(245, 245, 220, 0.3);
-          border-radius: 8px;
-          background: rgba(245, 245, 220, 0.05);
+        .coursework-section {
+          text-align: center;
+          padding: 2rem;
+          padding-bottom: 3rem; /* Extra padding at bottom */
         }
-        
-        .coming-soon h3 {
+        h1 {
           color: #f5f5dc;
+          margin-bottom: 0.5rem;
+        }
+        .section-intro {
+          color: #e0e0d0;
+          margin-bottom: 2rem;
+        }
+        .category-section {
+          margin-bottom: 2rem;
+        }
+        .category-title {
+          color: #90cdf4;
+          font-size: 1.3rem;
           margin-bottom: 1rem;
         }
-        
-        .coming-soon ul {
-          list-style-type: none;
-          padding-left: 0;
+        .courses-grid {
+          display: grid;
+          gap: 1rem;
+          grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
         }
-        
-        .coming-soon li {
-          margin: 0.5rem 0;
-          padding-left: 1rem;
-          position: relative;
+        .course-card {
+          background: rgba(255, 255, 255, 0.04);
+          border: 1px solid rgba(255, 255, 255, 0.08);
+          padding: 1.2rem;
+          border-radius: 12px;
+          backdrop-filter: blur(12px);
+          transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
-        
-        .coming-soon li::before {
-          content: "▸";
-          position: absolute;
-          left: 0;
+        .course-card:hover {
+          transform: translateY(-4px);
+          box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+        .course-name {
+          font-weight: 600;
           color: #f5f5dc;
+          margin-bottom: 0.5rem;
+        }
+        .course-status {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.5rem;
+          font-size: 0.9rem;
+          font-weight: 500;
+        }
+        .course-status.completed {
+          color: #34d399;
+        }
+        .course-status.ongoing {
+          color: #f59e0b;
         }
       `}</style>
     </div>
-  )
+  );
 }
 
-export default LearningJourney
+export default LearningJourney;

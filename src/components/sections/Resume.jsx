@@ -80,7 +80,7 @@ function Resume() {
 
   return (
     <>
-      <div className="content">
+      <div className="content intro">
         <h1>Resume</h1>
         <p>View my complete professional background and experience.</p>
         <Magnet padding={50} disabled={false} magnetStrength={4}>

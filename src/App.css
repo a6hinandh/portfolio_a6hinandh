@@ -30,11 +30,11 @@ body {
   overflow: hidden;
 }
 
-/* 3D Cube Container */
+/* Right section */
 .right-section {
   perspective: 1000px;
-  overflow: hidden;
   position: relative;
+  overflow: hidden;
 }
 
 /* Glass background box */
@@ -93,19 +93,33 @@ body {
   text-align: center;
   max-width: 90%;
   height: 100%;
-  overflow-y: auto;
-  overflow-x: hidden;
   padding: 1rem;
   box-sizing: border-box;
+  /* Remove overflow from here - let individual sections handle it */
+}
+
+/* Special handling for scrollable content like Learning Journey */
+.scrollable-content {
+  text-align: center;
+  max-width: 90%;
+  height: 100%;
+  padding: 1rem;
+  box-sizing: border-box;
+  overflow-y: auto;
+  overflow-x: hidden;
+  /* Enable smooth scrolling */
+  scroll-behavior: smooth;
+  /* Better scroll performance */
+  -webkit-overflow-scrolling: touch;
 }
 
 /* Headings and text */
 h1, h2 {
-  color: #f5f5dc; /* Light beige tone */
+  color: #f5f5dc;
 }
 
 p {
-  color: #e0e0d0; /* Slightly muted beige */
+  color: #e0e0d0;
 }
 
 /* Intro-specific styles */
@@ -151,7 +165,39 @@ p {
   opacity: 0.8;
 }
 
-/* Custom scrollbar */
+/* Custom scrollbar for scrollable content */
+.scrollable-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.scrollable-content::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+
+.scrollable-content::-webkit-scrollbar-thumb {
+  background: rgba(245, 245, 220, 0.4);
+  border-radius: 4px;
+  transition: background 0.3s ease;
+}
+
+.scrollable-content::-webkit-scrollbar-thumb:hover {
+  background: rgba(245, 245, 220, 0.6);
+}
+
+/* Firefox scrollbar styling */
+.scrollable-content {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(245, 245, 220, 0.4) rgba(255, 255, 255, 0.1);
+}
+
+/* Ensure Learning Journey content doesn't get cut off */
+.coursework-section {
+  min-height: fit-content;
+  padding-bottom: 2rem;
+}
+
+/* Legacy scrollbar for other content (keeping for compatibility) */
 .content::-webkit-scrollbar {
   width: 6px;
 }
@@ -177,4 +223,8 @@ p {
     height: 50vh;
     border-bottom: 1px solid rgba(245, 245, 220, 0.1);
   }
+}
+
+.intro{
+  margin-top: 50%;
 }

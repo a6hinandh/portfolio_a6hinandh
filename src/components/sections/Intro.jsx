@@ -2,7 +2,7 @@ import TextType from './components/TextType';
 import GradientText from './components/GradientText';
 function Intro() {
   return (
-    <div className="content">
+    <div className="content intro">
       <h1><GradientText
       colors={[" #ffffffff"," #49bde4ff"]}
       animationSpeed={3}
