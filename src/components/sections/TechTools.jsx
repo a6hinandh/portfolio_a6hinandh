@@ -1,9 +1,9 @@
 import React, { useRef, useEffect, useCallback, useState } from 'react';
 
 // Magic Bento utilities and constants
-const DEFAULT_PARTICLE_COUNT = 8;
-const DEFAULT_SPOTLIGHT_RADIUS = 250;
-const DEFAULT_GLOW_COLOR = "132, 0, 255";
+const DEFAULT_PARTICLE_COUNT = 6;
+const DEFAULT_SPOTLIGHT_RADIUS = 200;
+const DEFAULT_GLOW_COLOR = "59, 130, 246";
 const MOBILE_BREAKPOINT = 768;
 
 const createParticleElement = (x, y, color = DEFAULT_GLOW_COLOR) => {
@@ -11,11 +11,11 @@ const createParticleElement = (x, y, color = DEFAULT_GLOW_COLOR) => {
   el.className = "particle";
   el.style.cssText = `
     position: absolute;
-    width: 3px;
-    height: 3px;
+    width: 2px;
+    height: 2px;
     border-radius: 50%;
-    background: rgba(${color}, 1);
-    box-shadow: 0 0 6px rgba(${color}, 0.6);
+    background: rgba(${color}, 0.8);
+    box-shadow: 0 0 4px rgba(${color}, 0.6);
     pointer-events: none;
     z-index: 100;
     left: ${x}px;
@@ -25,8 +25,8 @@ const createParticleElement = (x, y, color = DEFAULT_GLOW_COLOR) => {
 };
 
 const calculateSpotlightValues = (radius) => ({
-  proximity: radius * 0.5,
-  fadeDistance: radius * 0.75,
+  proximity: radius * 0.6,
+  fadeDistance: radius * 0.8,
 });
 
 const updateCardGlowProperties = (card, mouseX, mouseY, glow, radius) => {
@@ -50,7 +50,6 @@ const ParticleCard = ({
   glowColor = DEFAULT_GLOW_COLOR,
   enableTilt = true,
   clickEffect = true,
-  enableMagnetism = true,
 }) => {
   const cardRef = useRef(null);
   const particlesRef = useRef([]);
@@ -58,7 +57,6 @@ const ParticleCard = ({
   const isHoveredRef = useRef(false);
   const memoizedParticles = useRef([]);
   const particlesInitialized = useRef(false);
-  const magnetismAnimationRef = useRef(null);
 
   const initializeParticles = useCallback(() => {
     if (particlesInitialized.current || !cardRef.current) return;
@@ -77,25 +75,24 @@ const ParticleCard = ({
   const clearAllParticles = useCallback(() => {
     timeoutsRef.current.forEach(clearTimeout);
     timeoutsRef.current = [];
-    magnetismAnimationRef.current?.kill?.();
 
     particlesRef.current.forEach((particle) => {
       if (particle.parentNode) {
-        particle.style.transition = 'all 0.3s ease';
+        particle.style.transition = 'all 0.2s ease';
         particle.style.transform = 'scale(0)';
         particle.style.opacity = '0';
         setTimeout(() => {
           if (particle.parentNode) {
             particle.parentNode.removeChild(particle);
           }
-        }, 300);
+        }, 200);
       }
     });
     particlesRef.current = [];
   }, []);
 
   const animateParticles = useCallback(() => {
-    if (!cardRef.current || !isHoveredRef.current) return;
+    if (!cardRef.current || !isHoveredRef.current || disableAnimations) return;
 
     if (!particlesInitialized.current) {
       initializeParticles();
@@ -112,31 +109,31 @@ const ParticleCard = ({
         clone.style.transform = 'scale(0)';
         clone.style.opacity = '0';
         setTimeout(() => {
-          clone.style.transition = 'all 0.3s ease';
+          clone.style.transition = 'all 0.2s ease';
           clone.style.transform = 'scale(1)';
           clone.style.opacity = '1';
         }, 10);
 
         const moveParticle = () => {
           if (!isHoveredRef.current) return;
-          const x = (Math.random() - 0.5) * 80;
-          const y = (Math.random() - 0.5) * 80;
-          clone.style.transform = `translate(${x}px, ${y}px) scale(1) rotate(${Math.random() * 360}deg)`;
-          setTimeout(moveParticle, 2000 + Math.random() * 1000);
+          const x = (Math.random() - 0.5) * 60;
+          const y = (Math.random() - 0.5) * 60;
+          clone.style.transform = `translate(${x}px, ${y}px) scale(1)`;
+          setTimeout(moveParticle, 1500 + Math.random() * 1000);
         };
-        setTimeout(moveParticle, 500);
+        setTimeout(moveParticle, 300);
 
         const pulse = () => {
           if (!isHoveredRef.current) return;
-          clone.style.opacity = Math.random() * 0.5 + 0.3;
-          setTimeout(pulse, 1500 + Math.random() * 1000);
+          clone.style.opacity = Math.random() * 0.4 + 0.3;
+          setTimeout(pulse, 1000 + Math.random() * 1000);
         };
-        setTimeout(pulse, 1000);
-      }, index * 100);
+        setTimeout(pulse, 500);
+      }, index * 80);
 
       timeoutsRef.current.push(timeoutId);
     });
-  }, [initializeParticles]);
+  }, [initializeParticles, disableAnimations]);
 
   useEffect(() => {
     if (disableAnimations || !cardRef.current) return;
@@ -148,8 +145,8 @@ const ParticleCard = ({
       animateParticles();
 
       if (enableTilt) {
-        element.style.transition = 'transform 0.3s ease';
-        element.style.transform = 'perspective(1000px) rotateX(5deg) rotateY(5deg)';
+        element.style.transition = 'transform 0.2s ease';
+        element.style.transform = 'perspective(1000px) rotateX(2deg) rotateY(2deg) translateY(-2px)';
       }
     };
 
@@ -158,16 +155,12 @@ const ParticleCard = ({
       clearAllParticles();
 
       if (enableTilt) {
-        element.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg)';
-      }
-
-      if (enableMagnetism) {
-        element.style.transform = element.style.transform.replace(/translate[XY]\([^)]*\)/g, '');
+        element.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0px)';
       }
     };
 
     const handleMouseMove = (e) => {
-      if (!enableTilt && !enableMagnetism) return;
+      if (!enableTilt) return;
 
       const rect = element.getBoundingClientRect();
       const x = e.clientX - rect.left;
@@ -175,19 +168,9 @@ const ParticleCard = ({
       const centerX = rect.width / 2;
       const centerY = rect.height / 2;
 
-      if (enableTilt) {
-        const rotateX = ((y - centerY) / centerY) * -8;
-        const rotateY = ((x - centerX) / centerX) * 8;
-        element.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-      }
-
-      if (enableMagnetism) {
-        const magnetX = (x - centerX) * 0.03;
-        const magnetY = (y - centerY) * 0.03;
-        const currentTransform = element.style.transform || '';
-        const newTransform = currentTransform.replace(/translate[XY]\([^)]*\)/g, '') + ` translateX(${magnetX}px) translateY(${magnetY}px)`;
-        element.style.transform = newTransform;
-      }
+      const rotateX = ((y - centerY) / centerY) * -3;
+      const rotateY = ((x - centerX) / centerX) * 3;
+      element.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-2px)`;
     };
 
     const handleClick = (e) => {
@@ -197,37 +180,30 @@ const ParticleCard = ({
       const x = e.clientX - rect.left;
       const y = e.clientY - rect.top;
 
-      const maxDistance = Math.max(
-        Math.hypot(x, y),
-        Math.hypot(x - rect.width, y),
-        Math.hypot(x, y - rect.height),
-        Math.hypot(x - rect.width, y - rect.height)
-      );
-
       const ripple = document.createElement("div");
       ripple.style.cssText = `
         position: absolute;
-        width: ${maxDistance * 2}px;
-        height: ${maxDistance * 2}px;
+        width: 100px;
+        height: 100px;
         border-radius: 50%;
-        background: radial-gradient(circle, rgba(${glowColor}, 0.4) 0%, rgba(${glowColor}, 0.2) 30%, transparent 70%);
-        left: ${x - maxDistance}px;
-        top: ${y - maxDistance}px;
+        background: radial-gradient(circle, rgba(${glowColor}, 0.3) 0%, rgba(${glowColor}, 0.1) 50%, transparent 70%);
+        left: ${x - 50}px;
+        top: ${y - 50}px;
         pointer-events: none;
         z-index: 1000;
         transform: scale(0);
         opacity: 1;
-        transition: all 0.8s ease;
+        transition: all 0.6s ease;
       `;
 
       element.appendChild(ripple);
 
       setTimeout(() => {
-        ripple.style.transform = 'scale(1)';
+        ripple.style.transform = 'scale(2)';
         ripple.style.opacity = '0';
       }, 10);
 
-      setTimeout(() => ripple.remove(), 800);
+      setTimeout(() => ripple.remove(), 600);
     };
 
     element.addEventListener("mouseenter", handleMouseEnter);
@@ -243,7 +219,7 @@ const ParticleCard = ({
       element.removeEventListener("click", handleClick);
       clearAllParticles();
     };
-  }, [animateParticles, clearAllParticles, disableAnimations, enableTilt, enableMagnetism, clickEffect, glowColor]);
+  }, [animateParticles, clearAllParticles, disableAnimations, enableTilt, clickEffect, glowColor]);
 
   return (
     <div
@@ -274,23 +250,22 @@ const GlobalSpotlight = ({
     spotlight.className = "global-spotlight";
     spotlight.style.cssText = `
       position: fixed;
-      width: 600px;
-      height: 600px;
+      width: 400px;
+      height: 400px;
       border-radius: 50%;
       pointer-events: none;
       background: radial-gradient(circle,
-        rgba(${glowColor}, 0.12) 0%,
-        rgba(${glowColor}, 0.06) 15%,
-        rgba(${glowColor}, 0.03) 25%,
-        rgba(${glowColor}, 0.015) 40%,
-        rgba(${glowColor}, 0.008) 65%,
+        rgba(${glowColor}, 0.08) 0%,
+        rgba(${glowColor}, 0.04) 20%,
+        rgba(${glowColor}, 0.02) 35%,
+        rgba(${glowColor}, 0.01) 50%,
         transparent 70%
       );
       z-index: 200;
       opacity: 0;
       transform: translate(-50%, -50%);
       mix-blend-mode: screen;
-      transition: opacity 0.3s ease;
+      transition: opacity 0.2s ease;
     `;
     document.body.appendChild(spotlight);
     spotlightRef.current = spotlight;
@@ -304,7 +279,7 @@ const GlobalSpotlight = ({
                          e.clientY >= rect.top && e.clientY <= rect.bottom;
 
       isInsideSection.current = mouseInside;
-      const cards = gridRef.current.querySelectorAll(".tech-box");
+      const cards = gridRef.current.querySelectorAll(".tech-card");
 
       if (!mouseInside) {
         spotlightRef.current.style.opacity = '0';
@@ -340,16 +315,16 @@ const GlobalSpotlight = ({
       spotlightRef.current.style.left = e.clientX + 'px';
       spotlightRef.current.style.top = e.clientY + 'px';
 
-      const targetOpacity = minDistance <= proximity ? 0.6 : 
+      const targetOpacity = minDistance <= proximity ? 0.4 : 
                            minDistance <= fadeDistance ? 
-                           ((fadeDistance - minDistance) / (fadeDistance - proximity)) * 0.6 : 0;
+                           ((fadeDistance - minDistance) / (fadeDistance - proximity)) * 0.4 : 0;
 
       spotlightRef.current.style.opacity = targetOpacity;
     };
 
     const handleMouseLeave = () => {
       isInsideSection.current = false;
-      gridRef.current?.querySelectorAll(".tech-box").forEach((card) => {
+      gridRef.current?.querySelectorAll(".tech-card").forEach((card) => {
         card.style.setProperty("--glow-intensity", "0");
       });
       if (spotlightRef.current) {
@@ -394,7 +369,7 @@ const TechLogo = ({ tech }) => {
     'React.js': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg',
     'Bootstrap': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bootstrap/bootstrap-original.svg',
     'JQuery': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/jquery/jquery-original.svg',
-    'EJS': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg', // EJS uses JS logo
+    'EJS': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg',
     'Node.js': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg',
     'Express.js': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg',
     'FastAPI': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/fastapi/fastapi-original.svg',
@@ -410,19 +385,18 @@ const TechLogo = ({ tech }) => {
     'OAuth': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/oauth/oauth-original.svg'
   };
 
-  // Use a fallback or apply filter for dark logos
   const darkLogos = ['Express.js'];
 
   return (
     <img
-      src={logoMap[tech] || 'https://via.placeholder.com/20x20?text=?'}
+      src={logoMap[tech] || 'https://via.placeholder.com/18x18?text=?'}
       alt={tech}
       style={{
-        width: '20px',
-        height: '20px',
-        marginRight: '8px',
+        width: '18px',
+        height: '18px',
+        marginRight: '6px',
         flexShrink: 0,
-        filter: darkLogos.includes(tech) ? 'invert(1)' : 'brightness(0.9)'
+        filter: darkLogos.includes(tech) ? 'invert(1) brightness(0.9)' : 'brightness(0.95)'
       }}
       onError={(e) => {
         e.target.style.display = 'none';
@@ -439,274 +413,401 @@ const TechTools = () => {
 
   const techSections = [
     {
-      title: 'Frontend',
+      title: 'Frontend Development',
       items: ['HTML', 'CSS', 'Javascript', 'React.js', 'Bootstrap', 'JQuery', 'EJS'],
-      gridArea: 'frontend',
-      color: '#060010'
+      description: 'Building responsive, interactive user interfaces with modern web technologies',
+      icon: '🎨'
     },
     {
-      title: 'Backend',
+      title: 'Backend Development',
       items: ['Node.js', 'Express.js', 'FastAPI'],
-      gridArea: 'backend',
-      color: '#060010'
+      description: 'Creating robust server-side applications and RESTful APIs',
+      icon: '⚙️'
     },
     {
-      title: 'Language',
+      title: 'Programming Languages',
       items: ['Python', 'Java', 'C', 'C++'],
-      gridArea: 'language',
-      color: '#060010'
+      description: 'Multi-language proficiency for diverse development needs',
+      icon: '💻'
     },
     {
-      title: 'Database',
+      title: 'Database Management',
       items: ['PostgreSQL', 'MYSQL'],
-      gridArea: 'database',
-      color: '#060010'
+      description: 'Designing and optimizing relational database systems',
+      icon: '🗄️'
     },
     {
-      title: 'Mobile',
+      title: 'Mobile Development',
       items: ['Flutter'],
-      gridArea: 'mobile',
-      color: '#060010'
+      description: 'Cross-platform mobile app development',
+      icon: '📱'
     },
     {
-      title: 'Tools',
+      title: 'Development Tools',
       items: ['Render', 'GIT', 'OAuth'],
-      gridArea: 'tools',
-      color: '#060010'
+      description: 'Essential tools for deployment, version control, and authentication',
+      icon: '🛠️'
     }
   ];
 
   return (
     <div className="tech-stack-section">
-      {/* Header Section */}
-      <div style={{
-        textAlign: 'center',
-        marginBottom: '2rem',
-        paddingBottom: '1rem',
-        borderBottom: '2px solid rgba(132, 0, 255, 0.3)'
-      }}>
-        <h1 style={{
-          fontSize: '2.5rem',
-          fontWeight: 'bold',
-          background: 'linear-gradient(135deg, #8400ff, #b366ff)',
-          WebkitBackgroundClip: 'text',
-          WebkitTextFillColor: 'transparent',
-          marginBottom: '0.5rem'
-        }}>
-          Tech Stack
-        </h1>
-        <p style={{
-          fontSize: '1.1rem',
-          color: '#e0e0d0',
-          maxWidth: '600px',
-          margin: '0 auto',
-          lineHeight: '1.6'
-        }}>
-          A comprehensive overview of the frameworks, programming languages, databases, and tools 
-          I work with to build modern, scalable applications.
-        </p>
-      </div>
-
       <GlobalSpotlight
         gridRef={gridRef}
         disableAnimations={shouldDisableAnimations}
-        enabled={true}
+        enabled={!shouldDisableAnimations}
         spotlightRadius={DEFAULT_SPOTLIGHT_RADIUS}
         glowColor={DEFAULT_GLOW_COLOR}
       />
       
-      <div 
-        ref={gridRef}
-        className="tech-grid-container"
-        style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(3, 1fr)',
-          gridTemplateRows: 'auto auto auto',
-          gap: '1rem',
-          padding: '2rem',
-          maxWidth: '900px',
-          margin: 'auto',
-          '--glow-color': DEFAULT_GLOW_COLOR,
-        }}
-      >
+      {/* Header Section */}
+      <div className="tech-header">
+        <h1 className="tech-title">
+          Technology Stack
+        </h1>
+        <p className="tech-subtitle">
+          Building modern applications with cutting-edge technologies and industry best practices
+        </p>
+      </div>
+
+      <div ref={gridRef} className="tech-grid">
         {techSections.map((section, index) => (
           <ParticleCard
             key={section.title}
-            className={`tech-box ${section.gridArea}`}
+            className="tech-card"
             disableAnimations={shouldDisableAnimations}
-            particleCount={6}
+            particleCount={4}
             glowColor={DEFAULT_GLOW_COLOR}
-            enableTilt={true}
+            enableTilt={!shouldDisableAnimations}
             clickEffect={true}
-            enableMagnetism={true}
             style={{
-              background: section.color,
-              border: '1px solid #392e4e',
-              borderRadius: '1rem',
-              padding: '1rem',
-              textAlign: 'center',
-              color: 'white',
-              gridArea: section.gridArea,
-              transition: 'all 0.3s ease',
-              position: 'relative',
-              overflow: 'hidden',
-              // Grid positioning
-              ...(section.gridArea === 'frontend' && {
-                gridColumn: '1 / 2',
-                gridRow: '1 / 3'
-              }),
-              ...(section.gridArea === 'backend' && {
-                gridColumn: '2 / 3',
-                gridRow: '1'
-              }),
-              ...(section.gridArea === 'language' && {
-                gridColumn: '3 / 4',
-                gridRow: '1 / 2'
-              }),
-              ...(section.gridArea === 'database' && {
-                gridColumn: '2 / 3',
-                gridRow: '2'
-              }),
-              ...(section.gridArea === 'mobile' && {
-                gridColumn: '3 / 4',
-                gridRow: '2'
-              }),
-              ...(section.gridArea === 'tools' && {
-                gridColumn: '1 / 4',
-                gridRow: '3'
-              }),
-              // Glow variables
               '--glow-x': '50%',
               '--glow-y': '50%',
               '--glow-intensity': '0',
-              '--glow-radius': '200px',
+              '--glow-radius': '150px',
             }}
           >
-            {/* Border glow effect */}
+            {/* Glow border effect */}
             <div
+              className="card-glow-border"
               style={{
-                content: '',
                 position: 'absolute',
                 inset: '0',
-                padding: '2px',
+                padding: '1px',
                 background: `radial-gradient(var(--glow-radius) circle at var(--glow-x) var(--glow-y),
-                  rgba(132, 0, 255, calc(var(--glow-intensity) * 0.8)) 0%,
-                  rgba(132, 0, 255, calc(var(--glow-intensity) * 0.4)) 30%,
-                  transparent 60%)`,
+                  rgba(59, 130, 246, calc(var(--glow-intensity) * 0.6)) 0%,
+                  rgba(59, 130, 246, calc(var(--glow-intensity) * 0.3)) 30%,
+                  transparent 70%)`,
                 borderRadius: 'inherit',
                 mask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
                 maskComposite: 'subtract',
                 WebkitMask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
                 WebkitMaskComposite: 'xor',
                 pointerEvents: 'none',
-                transition: 'opacity 0.3s ease',
                 zIndex: 1,
               }}
             />
             
-            <div style={{ position: 'relative', zIndex: 2 }}>
-              <h3 style={{
-                margin: '0 0 0.5rem',
-                fontWeight: 'bold',
-                fontSize: '1.1rem',
-                color: '#f5f5dc'
-              }}>
-                {section.title}
-              </h3>
+            <div className="card-content">
+              <div className="card-header">
+                <span className="card-icon" role="img" aria-label={section.title}>
+                  {section.icon}
+                </span>
+                <h3 className="card-title">{section.title}</h3>
+              </div>
               
-              {section.gridArea === 'tools' ? (
-                <div style={{
-                  display: 'flex',
-                  justifyContent: 'space-around',
-                  paddingTop: '0.5rem',
-                  flexWrap: 'wrap',
-                  gap: '0.5rem'
-                }}>
-                  {section.items.map((item, itemIndex) => (
-                    <div key={itemIndex} style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      color: '#e0e0d0',
-                      fontSize: '0.9rem'
-                    }}>
-                      <TechLogo tech={item} />
-                      <span>{item}</span>
-                    </div>
-                  ))}
-                </div>
-              ) : (
-                <ul style={{
-                  listStyle: 'none',
-                  padding: '0',
-                  margin: '0'
-                }}>
-                  {section.items.map((item, itemIndex) => (
-                    <li key={itemIndex} style={{
-                      margin: '0.25rem 0',
-                      color: '#e0e0d0',
-                      fontSize: '0.9rem',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center'
-                    }}>
-                      <TechLogo tech={item} />
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              )}
+              <p className="card-description">{section.description}</p>
+              
+              <div className="tech-items">
+                {section.items.map((item, itemIndex) => (
+                  <div key={itemIndex} className="tech-item">
+                    <TechLogo tech={item} />
+                    <span className="tech-name">{item}</span>
+                  </div>
+                ))}
+              </div>
             </div>
           </ParticleCard>
         ))}
       </div>
 
       <style jsx>{`
-        .tech-box:hover {
-          transform: translateY(-2px);
-          box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15), 0 0 30px rgba(132, 0, 255, 0.2);
+        .tech-stack-section {
+          width: 100%;
+          height: 100%;
+          padding: 1.5rem;
+          overflow-y: auto;
+          overflow-x: hidden;
+          scrollbar-width: thin;
+          scrollbar-color: rgba(59, 130, 246, 0.4) transparent;
         }
-        
+
+        .tech-stack-section::-webkit-scrollbar {
+          width: 6px;
+        }
+
+        .tech-stack-section::-webkit-scrollbar-track {
+          background: transparent;
+        }
+
+        .tech-stack-section::-webkit-scrollbar-thumb {
+          background: rgba(59, 130, 246, 0.4);
+          border-radius: 3px;
+        }
+
+        .tech-stack-section::-webkit-scrollbar-thumb:hover {
+          background: rgba(59, 130, 246, 0.6);
+        }
+
+        .tech-header {
+          text-align: center;
+          margin-bottom: 2rem;
+          padding-bottom: 1.5rem;
+          border-bottom: 1px solid rgba(59, 130, 246, 0.2);
+        }
+
+        .tech-title {
+          font-size: 2.2rem !important;
+          font-weight: 700;
+          background: linear-gradient(135deg, #60a5fa, #a78bfa, #34d399);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+          margin-bottom: 0.75rem;
+          text-shadow: none;
+        }
+
+        .tech-subtitle {
+          font-size: 1rem;
+          color: #94a3b8;
+          max-width: 600px;
+          margin: 0 auto;
+          line-height: 1.6;
+        }
+
+        .tech-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+          gap: 1.5rem;
+          max-width: 1200px;
+          margin: 0 auto;
+        }
+
+        .tech-card {
+          background: rgba(30, 41, 59, 0.4);
+          backdrop-filter: blur(12px);
+          -webkit-backdrop-filter: blur(12px);
+          border: 1px solid rgba(59, 130, 246, 0.2);
+          border-radius: 16px;
+          padding: 1.5rem;
+          transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+          box-shadow: 
+            0 4px 16px rgba(0, 0, 0, 0.3),
+            0 2px 8px rgba(59, 130, 246, 0.1);
+          position: relative;
+          overflow: hidden;
+        }
+
+        .tech-card:hover {
+          border-color: rgba(59, 130, 246, 0.4);
+          box-shadow: 
+            0 8px 32px rgba(0, 0, 0, 0.4),
+            0 4px 16px rgba(59, 130, 246, 0.2);
+        }
+
+        .card-content {
+          position: relative;
+          z-index: 2;
+          height: 100%;
+          display: flex;
+          flex-direction: column;
+        }
+
+        .card-header {
+          display: flex;
+          align-items: center;
+          gap: 0.75rem;
+          margin-bottom: 1rem;
+        }
+
+        .card-icon {
+          font-size: 1.5rem;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 40px;
+          height: 40px;
+          background: rgba(59, 130, 246, 0.1);
+          border-radius: 10px;
+          border: 1px solid rgba(59, 130, 246, 0.2);
+        }
+
+        .card-title {
+          font-size: 1.25rem;
+          font-weight: 600;
+          color: #f1f5f9;
+          margin: 0;
+          line-height: 1.3;
+        }
+
+        .card-description {
+          color: #94a3b8;
+          font-size: 0.9rem;
+          line-height: 1.5;
+          margin-bottom: 1.5rem;
+          flex-grow: 1;
+        }
+
+        .tech-items {
+          display: flex;
+          flex-direction: column;
+          gap: 0.75rem;
+        }
+
+        .tech-item {
+          display: flex;
+          align-items: center;
+          padding: 0.5rem 0.75rem;
+          background: rgba(15, 23, 42, 0.3);
+          border: 1px solid rgba(59, 130, 246, 0.15);
+          border-radius: 8px;
+          transition: all 0.2s ease;
+          backdrop-filter: blur(8px);
+        }
+
+        .tech-item:hover {
+          background: rgba(59, 130, 246, 0.1);
+          border-color: rgba(59, 130, 246, 0.3);
+          transform: translateX(3px);
+        }
+
+        .tech-name {
+          color: #cbd5e1;
+          font-size: 0.9rem;
+          font-weight: 500;
+        }
+
         .particle-container {
           position: relative;
           overflow: hidden;
         }
-        
-        .particle::before {
-          content: '';
-          position: absolute;
-          top: -2px;
-          left: -2px;
-          right: -2px;
-          bottom: -2px;
-          background: rgba(132, 0, 255, 0.2);
-          border-radius: 50%;
-          z-index: -1;
-        }
-        
+
         .global-spotlight {
           mix-blend-mode: screen;
           will-change: transform, opacity;
           z-index: 200 !important;
           pointer-events: none;
         }
-        
+
+        /* Mobile Responsiveness */
+        @media (max-width: 1024px) {
+          .tech-grid {
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.25rem;
+          }
+
+          .tech-title {
+            font-size: 1.8rem !important;
+          }
+        }
+
         @media (max-width: 768px) {
-          .tech-grid-container {
-            grid-template-columns: 1fr !important;
-            padding: 1rem !important;
+          .tech-stack-section {
+            padding: 1rem;
+            height: auto;
+            min-height: 100%;
           }
-          
-          .tech-box {
-            grid-column: 1 !important;
-            grid-row: auto !important;
+
+          .tech-header {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
           }
-          
-          .tech-stack-section h1 {
-            font-size: 2rem !important;
+
+          .tech-title {
+            font-size: 1.6rem !important;
           }
-          
-          .tech-stack-section p {
-            font-size: 1rem !important;
+
+          .tech-subtitle {
+            font-size: 0.9rem;
+          }
+
+          .tech-grid {
+            grid-template-columns: 1fr;
+            gap: 1rem;
+          }
+
+          .tech-card {
+            padding: 1.25rem;
+          }
+
+          .card-title {
+            font-size: 1.1rem;
+          }
+
+          .card-description {
+            font-size: 0.85rem;
+          }
+
+          .tech-item {
+            padding: 0.4rem 0.6rem;
+          }
+
+          .tech-name {
+            font-size: 0.85rem;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .tech-stack-section {
+            padding: 0.75rem;
+          }
+
+          .tech-title {
+            font-size: 1.4rem !important;
+          }
+
+          .tech-card {
+            padding: 1rem;
+          }
+
+          .card-icon {
+            width: 35px;
+            height: 35px;
+            font-size: 1.3rem;
+          }
+
+          .card-header {
+            gap: 0.5rem;
+          }
+
+          .tech-items {
+            gap: 0.5rem;
+          }
+
+          .tech-item {
+            padding: 0.35rem 0.5rem;
+          }
+        }
+
+        @media (max-width: 320px) {
+          .tech-title {
+            font-size: 1.2rem !important;
+          }
+
+          .tech-subtitle {
+            font-size: 0.8rem;
+          }
+
+          .card-title {
+            font-size: 1rem;
+          }
+
+          .card-description {
+            font-size: 0.8rem;
+          }
+
+          .tech-name {
+            font-size: 0.8rem;
           }
         }
       `}</style>

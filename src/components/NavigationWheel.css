@@ -306,9 +306,9 @@
 
   /* Adjust segment positioning for mobile wheel */
   .first .segment-content { top: 25px; left: 64%; }
-  .second .segment-content { top: 75px; right: 15px; }
-  .third .segment-content { top: 170px; right: 15px; }
-  .fourth .segment-content { bottom: 18px; right: 68px; }
+  .second .segment-content { top: 80px; right: 15px; }
+  .third .segment-content { top: 185px; right: 15px; }
+  .fourth .segment-content { bottom: 15px; right: 68px; }
   .fifth .segment-content { bottom: 18px; left: 98px; }
   .sixth .segment-content { bottom: 70px; left: 18px; }
   .seventh .segment-content { top: 105px; left: 15px; }
