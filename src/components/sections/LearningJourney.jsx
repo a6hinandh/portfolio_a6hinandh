@@ -54,7 +54,7 @@ function LearningJourney() {
   ];
 
   return (
-    <div className="scrollable-content">
+    <div className="learning-journey scrollable-content">
       <div className="coursework-section">
         <h1>Coursework & Academics</h1>
         <p className="section-intro">
@@ -90,62 +90,105 @@ function LearningJourney() {
       </div>
 
       <style jsx>{`
-        .coursework-section {
-          text-align: center;
-          padding: 2rem;
-          padding-bottom: 3rem; /* Extra padding at bottom */
-        }
-        h1 {
-          color: #f5f5dc;
-          margin-bottom: 0.5rem;
-        }
-        .section-intro {
-          color: #e0e0d0;
-          margin-bottom: 2rem;
-        }
-        .category-section {
-          margin-bottom: 2rem;
-        }
-        .category-title {
-          color: #90cdf4;
-          font-size: 1.3rem;
-          margin-bottom: 1rem;
-        }
-        .courses-grid {
-          display: grid;
-          gap: 1rem;
-          grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-        }
-        .course-card {
-          background: rgba(255, 255, 255, 0.04);
-          border: 1px solid rgba(255, 255, 255, 0.08);
-          padding: 1.2rem;
-          border-radius: 12px;
-          backdrop-filter: blur(12px);
-          transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .course-card:hover {
-          transform: translateY(-4px);
-          box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
-        }
-        .course-name {
-          font-weight: 600;
-          color: #f5f5dc;
-          margin-bottom: 0.5rem;
-        }
-        .course-status {
-          display: inline-flex;
-          align-items: center;
-          gap: 0.5rem;
-          font-size: 0.9rem;
-          font-weight: 500;
-        }
-        .course-status.completed {
-          color: #34d399;
-        }
-        .course-status.ongoing {
-          color: #f59e0b;
-        }
+        .learning-journey {
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  padding: 2rem;
+  box-sizing: border-box;
+}
+
+.coursework-section {
+  text-align: center;
+  padding-bottom: 3rem;
+}
+
+.coursework-section h1 {
+  color: #f5f5dc;
+  margin-bottom: 0.5rem;
+}
+
+.section-intro {
+  color: #e0e0d0;
+  margin-bottom: 2rem;
+}
+
+.category-section {
+  margin-bottom: 2rem;
+}
+
+.category-title {
+  color: #90cdf4;
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+}
+
+.courses-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.course-card {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 1.2rem;
+  border-radius: 12px;
+  backdrop-filter: blur(12px);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.course-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.course-name {
+  font-weight: 600;
+  color: #f5f5dc;
+  margin-bottom: 0.5rem;
+}
+
+.course-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.course-status.completed {
+  color: #34d399;
+}
+
+.course-status.ongoing {
+  color: #f59e0b;
+}
+
+/* ===== Responsive tweaks ===== */
+@media (max-width: 1024px) {
+  .learning-journey {
+    padding: 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .learning-journey {
+    padding: 1rem;
+  }
+  .courses-grid {
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  }
+}
+
+@media (max-width: 480px) {
+  .courses-grid {
+    grid-template-columns: 1fr;
+  }
+  .course-card {
+    padding: 1rem;
+  }
+}
       `}</style>
     </div>
   );
