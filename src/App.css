@@ -6,10 +6,40 @@ html, body, #root {
   overflow: hidden;
   font-family: 'Inter', 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
 }
+#root {
+  position: relative;
+  z-index: 1;
+}
 
 body {
   background: linear-gradient(135deg, #040810, #0f1621, #14181d);
   color: #e2e8f0;
+}
+body::before {
+  content: "";
+  position: fixed;
+  inset: -15%;
+  z-index: 0;              /* sits behind #root (which is z-index:1) */
+  pointer-events: none;
+  filter: blur(80px) saturate(120%);
+  opacity: 0.9;
+  transform: translateZ(0);
+  will-change: transform;
+
+  /* soft colored blobs + a rotating conic wash */
+  background:
+    radial-gradient(30rem 30rem at 20% 60%, rgba(59,130,246,0.18), transparent 60%),
+    radial-gradient(32rem 32rem at 80% 30%, rgba(147,51,234,0.16), transparent 60%),
+    radial-gradient(28rem 28rem at 45% 80%, rgba(16,185,129,0.16), transparent 60%),
+    conic-gradient(from 0deg at 50% 50%,
+      rgba(59,130,246,0.08),
+      rgba(147,51,234,0.10),
+      rgba(16,185,129,0.08),
+      rgba(59,130,246,0.08));
+  animation: auroraSpin 55s linear infinite;
+}
+@keyframes auroraSpin {
+  to { transform: rotate(360deg) scale(1.05); }
 }
 
 .container {
@@ -584,3 +614,42 @@ p {
   background: rgba(59, 130, 246, 0.3);
   color: #f1f5f9;
 }
+
+/* Aurora background container */
+.aurora-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: radial-gradient(circle at 30% 30%, rgba(59,130,246,0.15), transparent 60%),
+              radial-gradient(circle at 70% 40%, rgba(147,51,234,0.15), transparent 60%),
+              radial-gradient(circle at 50% 70%, rgba(16,185,129,0.15), transparent 70%);
+  z-index: -2; /* stays behind everything */
+}
+
+/* Add a moving blur layer to simulate aurora */
+.aurora-bg::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: conic-gradient(
+    from 0deg,
+    rgba(59,130,246,0.2),
+    rgba(147,51,234,0.2),
+    rgba(16,185,129,0.2),
+    rgba(59,130,246,0.2)
+  );
+  filter: blur(120px);
+  animation: auroraMove 20s linear infinite;
+}
+
+@keyframes auroraMove {
+  0%   { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+

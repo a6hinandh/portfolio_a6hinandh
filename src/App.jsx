@@ -44,6 +44,8 @@ function App() {
   }
 
   return (
+    <div>
+    <div className="aurora"></div>
     <div className="container">
       <div className="left-section">
         <CircularNavigation setActiveSection={handleSectionChange} />
@@ -58,6 +60,7 @@ function App() {
           </div>
         </div>
       </div>
+    </div>
     </div>
   )
 }

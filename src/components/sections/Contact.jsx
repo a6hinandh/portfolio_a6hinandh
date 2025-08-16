@@ -54,7 +54,7 @@ function Contact() {
   };
 
   return (
-    <div className="content">
+    <div className="content-c">
       <div className="contact-header">
         <h1>Let's Connect</h1>
         <p className="contact-subtitle">
@@ -163,6 +163,17 @@ function Contact() {
       )}
 
       <style jsx>{`
+        .content-c{
+          padding:1rem;
+          position: relative;
+          z-index:1;
+          width:100%;
+          height:100%;
+          overflow-y:auto;
+          box-sizing:border-box;
+          scroll-behavior:smooth;
+          -webkit-overflow-scrolling: touch;
+        }
         .contact-header {
           text-align: center;
           margin-bottom: 3rem;
@@ -437,6 +448,11 @@ function Contact() {
         }
 
         @media (max-width: 768px) {
+          .content-c{
+            height:100px;
+            min-height:40vh;
+            width:100vh;
+          }
           .contact-header h1 {
             font-size: 2rem;
           }

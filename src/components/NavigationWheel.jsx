@@ -16,11 +16,15 @@ function CircularNavigation({ setActiveSection }) {
   ];
 
   return (
+    
     <div className="circular-nav-container">
       {/* Contact Links positioned above the wheel */}
       <ContactLinks />
       
       {/* Center circle */}
+      <div className="navigation-particles">
+    {Array.from({ length: 15 }).map((_, i) => <span key={i}></span>)}
+  </div>
       <div 
         className="center-circle"
         onClick={() => setActiveSection('intro')}

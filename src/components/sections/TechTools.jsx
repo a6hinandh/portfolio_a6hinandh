@@ -533,13 +533,17 @@ const TechTools = () => {
 
       <style jsx>{`
         .tech-stack-section {
+          position: relative;
+          z-index:1;
           width: 100%;
           height: 100%;
-          padding: 1.5rem;
+          padding: 1rem;
           overflow-y: auto;
-          overflow-x: hidden;
+          box-sizing:border-box;
+          scroll-behavior: smooth;
           scrollbar-width: thin;
           scrollbar-color: rgba(59, 130, 246, 0.4) transparent;
+          -webkit-overflow-scrolling: touch;
         }
 
         .tech-stack-section::-webkit-scrollbar {
@@ -713,9 +717,9 @@ const TechTools = () => {
 
         @media (max-width: 768px) {
           .tech-stack-section {
-            padding: 1rem;
-            height: auto;
-            min-height: 100%;
+            height: 100px;
+            min-height: 40vh;
+            width:100vh;
           }
 
           .tech-header {

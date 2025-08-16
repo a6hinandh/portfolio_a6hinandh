@@ -58,12 +58,12 @@ function Education() {
 
       <style jsx>{`
         .education-scroll-wrapper {
-          margin-top:20%;
           position: relative;
           z-index: 1;
           height: 100%;
+          width:100%;
           overflow-y: auto;
-          padding: 0rem;
+          padding: 1rem;
           box-sizing: border-box;
           scroll-behavior: smooth;
           -webkit-overflow-scrolling: touch;
@@ -198,9 +198,9 @@ function Education() {
 
         @media (max-width: 768px) {
           .education-scroll-wrapper {
-            height: auto;
+            height: 100px;
             min-height: 40vh;
-            padding: 1.2rem;
+            width:100vh;
           }
           .education-header {
             flex-direction: column;

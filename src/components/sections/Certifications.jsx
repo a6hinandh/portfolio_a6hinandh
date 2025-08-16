@@ -33,8 +33,8 @@ function Certifications() {
   ];
 
   return (
-    <div className="content">
-      <h1>Certifications</h1>
+    <div className="content-c">
+      <h1 style={{paddingLeft:'25%'}}>Certifications</h1>
       <p>Professional certifications and credentials I've earned in technology and development.</p>
       <div style={{ 
         height: '400px', // Reduced height
@@ -54,6 +54,26 @@ function Certifications() {
           round={false}
         />
       </div>
+      <style jsx>{`
+        .content-c{
+          posiiton:relative;
+          z-index:1;
+          width:100%;
+          overflow-y: auto;
+          padding:1rem;
+          box-sizing: border-box;
+          scroll-behavior: smooth;
+          -webkit-overflow-scrolling: touch;
+        }
+        @media (max-width: 768px){
+          .content-c{
+            height:100px;
+            min-height:40vh;
+            width:100vh;
+          }
+        }
+      `}
+      </style>
     </div>
   )
 }
