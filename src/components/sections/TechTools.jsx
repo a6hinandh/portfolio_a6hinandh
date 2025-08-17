@@ -534,12 +534,12 @@ const TechTools = () => {
       <style jsx>{`
         .tech-stack-section {
           position: relative;
-          z-index:1;
+          z-index: 1;
           width: 100%;
           height: 100%;
           padding: 1rem;
           overflow-y: auto;
-          box-sizing:border-box;
+          box-sizing: border-box;
           scroll-behavior: smooth;
           scrollbar-width: thin;
           scrollbar-color: rgba(59, 130, 246, 0.4) transparent;
@@ -703,23 +703,75 @@ const TechTools = () => {
           pointer-events: none;
         }
 
-        /* Mobile Responsiveness */
-        @media (max-width: 1024px) {
+        /* Large desktop */
+        @media (min-width: 1440px) {
+          .tech-stack-section {
+            padding: 2rem;
+          }
+
+          .tech-title {
+            font-size: 2.5rem !important;
+          }
+
+          .tech-subtitle {
+            font-size: 1.1rem;
+          }
+
           .tech-grid {
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+          }
+
+          .tech-card {
+            padding: 2rem;
+          }
+        }
+
+        /* Desktop */
+        @media (max-width: 1280px) {
+          .tech-title {
+            font-size: 2rem !important;
+          }
+
+          .tech-grid {
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 1.25rem;
+          }
+        }
+
+        /* Tablet */
+        @media (max-width: 1024px) {
+          .tech-stack-section {
+            padding: 1.5rem;
           }
 
           .tech-title {
             font-size: 1.8rem !important;
           }
+
+          .tech-subtitle {
+            font-size: 0.95rem;
+          }
+
+          .tech-grid {
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.25rem;
+          }
+
+          .tech-header {
+            margin-bottom: 1.5rem;
+          }
         }
 
+        /* Mobile and tablet - matches App.css breakpoint */
         @media (max-width: 768px) {
+          /* Match the App.css mobile behavior */
           .tech-stack-section {
-            height: 100px;
-            min-height: 40vh;
-            width:100vh;
+            height: auto !important;
+            min-height: auto;
+            width: 100%;
+            padding: 1rem;
+            overflow: visible !important;
+            position: static;
           }
 
           .tech-header {
@@ -729,19 +781,23 @@ const TechTools = () => {
 
           .tech-title {
             font-size: 1.6rem !important;
+            margin-bottom: 0.5rem;
           }
 
           .tech-subtitle {
             font-size: 0.9rem;
+            line-height: 1.5;
           }
 
           .tech-grid {
             grid-template-columns: 1fr;
             gap: 1rem;
+            max-width: none;
           }
 
           .tech-card {
             padding: 1.25rem;
+            margin-bottom: 0.5rem;
           }
 
           .card-title {
@@ -750,6 +806,7 @@ const TechTools = () => {
 
           .card-description {
             font-size: 0.85rem;
+            margin-bottom: 1.25rem;
           }
 
           .tech-item {
@@ -759,47 +816,43 @@ const TechTools = () => {
           .tech-name {
             font-size: 0.85rem;
           }
+
+          .card-icon {
+            width: 36px;
+            height: 36px;
+            font-size: 1.4rem;
+          }
         }
 
+        /* Small mobile */
         @media (max-width: 480px) {
           .tech-stack-section {
-            padding: 0.75rem;
+            padding: 1rem 0.75rem;
           }
 
           .tech-title {
             font-size: 1.4rem !important;
           }
 
+          .tech-subtitle {
+            font-size: 0.85rem;
+            padding: 0 0.5rem;
+          }
+
           .tech-card {
             padding: 1rem;
+            border-radius: 12px;
           }
 
           .card-icon {
-            width: 35px;
-            height: 35px;
-            font-size: 1.3rem;
+            width: 32px;
+            height: 32px;
+            font-size: 1.2rem;
           }
 
           .card-header {
             gap: 0.5rem;
-          }
-
-          .tech-items {
-            gap: 0.5rem;
-          }
-
-          .tech-item {
-            padding: 0.35rem 0.5rem;
-          }
-        }
-
-        @media (max-width: 320px) {
-          .tech-title {
-            font-size: 1.2rem !important;
-          }
-
-          .tech-subtitle {
-            font-size: 0.8rem;
+            margin-bottom: 0.75rem;
           }
 
           .card-title {
@@ -808,10 +861,103 @@ const TechTools = () => {
 
           .card-description {
             font-size: 0.8rem;
+            margin-bottom: 1rem;
+          }
+
+          .tech-items {
+            gap: 0.5rem;
+          }
+
+          .tech-item {
+            padding: 0.35rem 0.5rem;
+            border-radius: 6px;
           }
 
           .tech-name {
             font-size: 0.8rem;
+          }
+        }
+
+        /* Very small screens */
+        @media (max-width: 320px) {
+          .tech-stack-section {
+            padding: 0.75rem 0.5rem;
+          }
+
+          .tech-title {
+            font-size: 1.2rem !important;
+          }
+
+          .tech-subtitle {
+            font-size: 0.8rem;
+            padding: 0 0.25rem;
+          }
+
+          .tech-header {
+            margin-bottom: 1rem;
+            padding-bottom: 0.75rem;
+          }
+
+          .tech-card {
+            padding: 0.75rem;
+          }
+
+          .card-icon {
+            width: 28px;
+            height: 28px;
+            font-size: 1rem;
+          }
+
+          .card-title {
+            font-size: 0.95rem;
+          }
+
+          .card-description {
+            font-size: 0.75rem;
+            line-height: 1.4;
+          }
+
+          .tech-item {
+            padding: 0.3rem 0.4rem;
+          }
+
+          .tech-name {
+            font-size: 0.75rem;
+          }
+        }
+
+        /* Landscape phone orientation */
+        @media (max-width: 768px) and (orientation: landscape) {
+          .tech-stack-section {
+            padding: 0.75rem;
+          }
+
+          .tech-header {
+            margin-bottom: 1rem;
+          }
+
+          .tech-title {
+            font-size: 1.4rem !important;
+          }
+
+          .tech-grid {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.75rem;
+          }
+
+          .tech-card {
+            padding: 1rem;
+          }
+        }
+
+        /* High DPI screens */
+        @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+          .tech-card {
+            border-width: 0.5px;
+          }
+          
+          .tech-item {
+            border-width: 0.5px;
           }
         }
       `}</style>

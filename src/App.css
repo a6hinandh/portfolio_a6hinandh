@@ -383,45 +383,55 @@ p {
   }
 }
 
-/* Mobile and small tablet - SWITCH TO TOP/BOTTOM LAYOUT */
+/* Mobile and small tablet - NATURAL SCROLLING LAYOUT */
 @media (max-width: 768px) {
+  /* IMPORTANT: Enable natural scrolling on mobile */
   html, body, #root {
-    overflow: auto;
-    height: auto;
+    overflow: auto !important;
+    height: auto !important;
+  }
+
+  /* Body background adjustments for mobile scrolling */
+  body::before {
+    position: absolute; /* Changed from fixed to absolute */
+    inset: 0; /* Changed from -15% to 0 for better mobile performance */
   }
 
   .container {
     flex-direction: column;
-    height: auto;
+    height: auto !important; /* Allow natural height */
+    min-height: 100vh; /* Ensure at least full viewport height */
     overflow: visible;
   }
 
-  /* LEFT SECTION BECOMES TOP SECTION */
+  /* LEFT SECTION BECOMES TOP SECTION - NATURAL HEIGHT */
   .left-section {
-    order: 1; /* First in order */
-    height: auto;
-    min-height: 50vh;
+    order: 1;
+    height: auto !important; /* Natural height based on content */
+    min-height: auto; /* Remove minimum height constraints */
     max-height: none;
-    padding: 1.5rem;
+    padding: 4.5rem;
     border-right: none;
     border-bottom: 2px solid rgba(59, 130, 246, 0.3);
     background: rgba(15, 23, 42, 0.4);
-    margin-bottom: 0;
+    display: block; /* Change from flex to block for natural flow */
+    overflow: visible; /* Allow content to flow naturally */
   }
 
-  /* RIGHT SECTION BECOMES BOTTOM SECTION */
+  /* RIGHT SECTION BECOMES BOTTOM SECTION - NATURAL HEIGHT */
   .right-section {
-    order: 2; /* Second in order */
-    height: auto;
-    min-height: 50vh;
+    order: 2;
+    height: auto !important; /* Natural height based on content */
+    min-height: auto; /* Remove minimum height constraints */
     padding: 1.5rem;
-    overflow-y: auto;
-    overflow-x: hidden;
+    overflow: visible !important; /* Allow natural overflow */
     background: rgba(30, 41, 59, 0.3);
+    display: block; /* Change from flex to block for natural flow */
   }
 
   /* Adjust glass background for mobile */
   .right-section::before {
+    position: absolute;
     top: 15px;
     left: 15px;
     right: 15px;
@@ -431,24 +441,42 @@ p {
     border: 1px solid rgba(59, 130, 246, 0.4);
   }
 
-  /* Mobile content adjustments */
+  /* Mobile content adjustments - NATURAL SIZING */
   .content, .scrollable-content {
     max-width: 95%;
     padding: 1rem;
+    height: auto !important; /* Natural height */
+    min-height: auto; /* Remove minimum height */
+    overflow: visible !important; /* No internal scrolling needed */
+    display: block; /* Natural block flow */
+  }
+
+  /* Cube container adjustments for mobile */
+  .cube-container {
+    height: auto !important; /* Natural height */
+    position: static; /* Change from relative to static */
+    transform-style: initial; /* Disable 3D transforms on mobile */
+  }
+
+  .cube-face {
+    position: static !important; /* Natural positioning */
+    width: auto;
     height: auto;
-    min-height: 40vh;
+    backface-visibility: visible; /* Show content normally */
+    display: block; /* Natural block display */
+  }
+
+  .cube-face.back {
+    display: none; /* Hide back face on mobile */
   }
 
   .intro {
-    margin-top: 5%;
+    margin-top: 2rem; /* Reduce top margin */
   }
 
   .navigation-hint {
-    position: relative;
-    bottom: auto;
-    left: auto;
-    transform: none;
-    margin: 1rem 0 0 0;
+    position: static; /* Natural positioning */
+    margin: 1rem 0;
     font-size: 0.8rem;
     text-align: center;
     width: 100%;
@@ -482,12 +510,10 @@ p {
 /* Small mobile breakpoint */
 @media (max-width: 480px) {
   .left-section {
-    min-height: 55vh;
-    padding: 1rem;
+    padding-bottom: rem;
   }
 
   .right-section {
-    min-height: 45vh;
     padding: 1rem;
   }
 
@@ -534,12 +560,10 @@ p {
 /* Very small screens */
 @media (max-width: 320px) {
   .left-section {
-    min-height: 50vh;
-    padding: 0.8rem;
+    padding: 4rem 1rem;
   }
 
   .right-section {
-    min-height: 50vh;
     padding: 0.8rem;
   }
 
@@ -652,4 +676,3 @@ p {
   0%   { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
-

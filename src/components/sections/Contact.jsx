@@ -163,17 +163,18 @@ function Contact() {
       )}
 
       <style jsx>{`
-        .content-c{
-          padding:1rem;
+        .content-c {
+          padding: 1rem;
           position: relative;
-          z-index:1;
-          width:100%;
-          height:100%;
-          overflow-y:auto;
-          box-sizing:border-box;
-          scroll-behavior:smooth;
+          z-index: 1;
+          width: 100%;
+          height: 100%;
+          overflow-y: auto;
+          box-sizing: border-box;
+          scroll-behavior: smooth;
           -webkit-overflow-scrolling: touch;
         }
+
         .contact-header {
           text-align: center;
           margin-bottom: 3rem;
@@ -447,37 +448,114 @@ function Contact() {
           }
         }
 
-        @media (max-width: 768px) {
-          .content-c{
-            height:100px;
-            min-height:40vh;
-            width:100vh;
+        /* Large Desktop */
+        @media (min-width: 1440px) {
+          .contact-header h1 {
+            font-size: 3rem;
           }
+          
+          .contact-subtitle {
+            font-size: 1.2rem;
+          }
+
+          .contact-container {
+            max-width: 600px;
+          }
+        }
+
+        /* Desktop */
+        @media (max-width: 1280px) {
+          .contact-header h1 {
+            font-size: 2.2rem;
+          }
+          
+          .contact-subtitle {
+            font-size: 1.05rem;
+          }
+        }
+
+        /* Tablet */
+        @media (max-width: 1024px) {
+          .content-c {
+            padding: 1.5rem;
+          }
+
           .contact-header h1 {
             font-size: 2rem;
           }
           
           .contact-subtitle {
             font-size: 1rem;
-            padding: 0 1rem;
           }
 
           .contact-container {
-            padding: 0 1rem;
+            max-width: 450px;
+          }
+        }
+
+        /* Mobile Layout - Matches App.css mobile breakpoint */
+        @media (max-width: 768px) {
+          .content-c {
+            padding: 1rem;
+            height: auto !important; /* Natural height for mobile */
+            overflow: visible !important; /* No internal scrolling needed */
+            width: 100% !important; /* Full width */
+            display: block; /* Natural block flow */
+          }
+
+          .contact-header {
+            margin-bottom: 2rem;
+            text-align: center;
+          }
+
+          .contact-header h1 {
+            font-size: 2rem;
+            margin-bottom: 0.8rem;
+          }
+          
+          .contact-subtitle {
+            font-size: 1rem;
+            padding: 0 0.5rem;
+            max-width: 100%;
+          }
+
+          .contact-container {
+            max-width: 100%;
+            padding: 0;
+            margin: 0 auto;
+          }
+
+          .contact-form {
+            gap: 1.2rem;
           }
 
           .form-input, .form-textarea {
             padding: 0.8rem 0.8rem 0.8rem 2.5rem;
+            font-size: 1rem;
+            border-radius: 10px;
           }
 
           .input-icon {
             left: 0.8rem;
+            font-size: 0.9rem;
+          }
+
+          .form-textarea {
+            min-height: 100px;
+          }
+
+          .submit-button {
+            padding: 0.9rem 1.5rem;
+            font-size: 1rem;
+            border-radius: 10px;
           }
 
           .status-modal {
             min-width: auto;
-            width: 90vw;
+            width: 85vw;
             padding: 1.5rem;
+            border-radius: 16px;
+            margin: 1rem;
           }
 
           .modal-icon {
@@ -490,6 +568,117 @@ function Contact() {
 
           .modal-content p {
             font-size: 0.9rem;
+          }
+        }
+
+        /* Small Mobile */
+        @media (max-width: 480px) {
+          .content-c {
+            padding: 0.8rem;
+          }
+
+          .contact-header {
+            margin-bottom: 1.5rem;
+          }
+
+          .contact-header h1 {
+            font-size: 1.8rem;
+          }
+          
+          .contact-subtitle {
+            font-size: 0.95rem;
+          }
+
+          .contact-form {
+            gap: 1rem;
+          }
+
+          .form-input, .form-textarea {
+            padding: 0.7rem 0.7rem 0.7rem 2.2rem;
+            font-size: 0.95rem;
+          }
+
+          .input-icon {
+            left: 0.7rem;
+            font-size: 0.85rem;
+          }
+
+          .form-textarea {
+            min-height: 90px;
+          }
+
+          .submit-button {
+            padding: 0.8rem 1.2rem;
+            font-size: 0.95rem;
+          }
+
+          .status-modal {
+            width: 90vw;
+            padding: 1.2rem;
+            margin: 0.5rem;
+          }
+
+          .modal-icon {
+            font-size: 2rem;
+          }
+
+          .modal-content h3 {
+            font-size: 1.1rem;
+          }
+
+          .modal-content p {
+            font-size: 0.85rem;
+          }
+        }
+
+        /* Very Small Mobile */
+        @media (max-width: 320px) {
+          .content-c {
+            padding: 0.6rem;
+          }
+
+          .contact-header h1 {
+            font-size: 1.6rem;
+          }
+          
+          .contact-subtitle {
+            font-size: 0.9rem;
+          }
+
+          .form-input, .form-textarea {
+            padding: 0.6rem 0.6rem 0.6rem 2rem;
+            font-size: 0.9rem;
+          }
+
+          .input-icon {
+            left: 0.6rem;
+            font-size: 0.8rem;
+          }
+
+          .form-textarea {
+            min-height: 80px;
+          }
+
+          .submit-button {
+            padding: 0.7rem 1rem;
+            font-size: 0.9rem;
+          }
+
+          .status-modal {
+            width: 95vw;
+            padding: 1rem;
+          }
+
+          .modal-icon {
+            font-size: 1.8rem;
+          }
+
+          .modal-content h3 {
+            font-size: 1rem;
+          }
+
+          .modal-content p {
+            font-size: 0.8rem;
           }
         }
       `}</style>
