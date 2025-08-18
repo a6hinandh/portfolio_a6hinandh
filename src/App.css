@@ -1,11 +1,19 @@
-/* Base layout */
+/* FULL WIDTH FOUNDATION - CRITICAL RULES */
+* {
+  box-sizing: border-box;
+}
+
 html, body, #root {
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 100% !important;
   height: 100%;
   margin: 0;
   padding: 0;
-  overflow: hidden;
+  overflow-x: hidden; /* Prevent horizontal scroll */
   font-family: 'Inter', 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
 }
+
 #root {
   position: relative;
   z-index: 1;
@@ -15,18 +23,17 @@ body {
   background: linear-gradient(135deg, #040810, #0f1621, #14181d);
   color: #e2e8f0;
 }
+
 body::before {
   content: "";
   position: fixed;
   inset: -15%;
-  z-index: 0;              /* sits behind #root (which is z-index:1) */
+  z-index: 0;
   pointer-events: none;
   filter: blur(80px) saturate(120%);
   opacity: 0.9;
   transform: translateZ(0);
   will-change: transform;
-
-  /* soft colored blobs + a rotating conic wash */
   background:
     radial-gradient(30rem 30rem at 20% 60%, rgba(59,130,246,0.18), transparent 60%),
     radial-gradient(32rem 32rem at 80% 30%, rgba(147,51,234,0.16), transparent 60%),
@@ -38,6 +45,7 @@ body::before {
       rgba(59,130,246,0.08));
   animation: auroraSpin 55s linear infinite;
 }
+
 @keyframes auroraSpin {
   to { transform: rotate(360deg) scale(1.05); }
 }
@@ -45,12 +53,14 @@ body::before {
 .container {
   display: flex;
   height: 100vh;
-  width: 100%;
-  background: linear-gradient(135deg,  #040810, #0f1621, #181d23);
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 100% !important;
+  background: linear-gradient(135deg, #040810, #0f1621, #181d23);
   position: relative;
+  overflow-x: hidden; /* Prevent any horizontal overflow */
 }
 
-/* Add subtle animated background pattern */
 .container::before {
   content: '';
   position: absolute;
@@ -66,9 +76,12 @@ body::before {
   z-index: 0;
 }
 
-/* Sections */
+/* SECTIONS - GUARANTEED FULL WIDTH */
 .left-section, .right-section {
   flex: 1;
+  min-width: 0; /* Prevents flex items from overflowing */
+  width: 50%;
+  max-width: 50%;
   padding: 2rem;
   display: flex;
   justify-content: center;
@@ -79,7 +92,6 @@ body::before {
   z-index: 1;
 }
 
-/* Left section enhancement */
 .left-section {
   background: rgba(15, 23, 42, 0.3);
   backdrop-filter: blur(10px);
@@ -87,7 +99,6 @@ body::before {
   border-right: 1px solid rgba(59, 130, 246, 0.2);
 }
 
-/* Right section */
 .right-section {
   perspective: 1000px;
   position: relative;
@@ -95,7 +106,6 @@ body::before {
   background: rgba(30, 41, 59, 0.2);
 }
 
-/* Enhanced glass background box */
 .right-section::before {
   content: '';
   position: absolute;
@@ -115,14 +125,15 @@ body::before {
   z-index: 0;
 }
 
-/* Enhanced 3D cube transition */
+/* 3D CUBE TRANSITIONS */
 .cube-container {
   position: relative;
   width: 100%;
   height: 100%;
   transform-style: preserve-3d;
-  transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transition: transform 1.2s cubic-bezier(0.23, 1, 0.320, 1);
   z-index: 1;
+  transform-origin: center center;
 }
 
 .cube-face {
@@ -134,6 +145,7 @@ body::before {
   justify-content: center;
   align-items: center;
   border-radius: 20px;
+  transition: opacity 0.3s ease;
 }
 
 .cube-face.front {
@@ -144,12 +156,92 @@ body::before {
   transform: rotateY(180deg) translateZ(0);
 }
 
-/* Rotation states */
 .cube-container.rotating {
-  transform: rotateY(180deg);
+  transform: rotateY(180deg) scale(1.02);
+  filter: brightness(1.1) contrast(1.05);
+  transition: transform 1.2s cubic-bezier(0.23, 1, 0.320, 1),
+              filter 1.2s ease,
+              box-shadow 1.2s ease;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3),
+              0 0 20px rgba(59, 130, 246, 0.2);
 }
 
-/* Content inside each section */
+.cube-container.rotating::before {
+  content: '';
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  right: -10px;
+  bottom: -10px;
+  background: linear-gradient(45deg, 
+    rgba(59, 130, 246, 0.1),
+    rgba(147, 51, 234, 0.1),
+    rgba(16, 185, 129, 0.1),
+    rgba(59, 130, 246, 0.1));
+  border-radius: 30px;
+  z-index: -1;
+  filter: blur(20px);
+  opacity: 0.6;
+  animation: rotatingGlow 1.2s ease-in-out;
+}
+
+@keyframes rotatingGlow {
+  0%, 100% {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.05);
+  }
+}
+
+.cube-container.rotating .cube-face {
+  transition: opacity 0.6s ease;
+}
+
+.right-section:has(.cube-container.rotating)::before {
+  border-color: rgba(59, 130, 246, 0.5);
+  box-shadow: 
+    0 30px 60px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(148, 163, 184, 0.3),
+    0 0 0 2px rgba(59, 130, 246, 0.2),
+    0 0 30px rgba(59, 130, 246, 0.1);
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
+  transition: all 1.2s ease;
+}
+
+.right-section {
+  perspective: 1200px;
+  perspective-origin: center center;
+  position: relative;
+  overflow: hidden;
+  background: rgba(30, 41, 59, 0.2);
+}
+
+.content, .scrollable-content {
+  animation: fadeInUp 0.8s cubic-bezier(0.23, 1, 0.320, 1);
+  transition: transform 0.3s ease;
+}
+
+.cube-container:not(.rotating):hover {
+  transform: translateY(-2px);
+  transition: transform 0.3s ease;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* CONTENT STYLING */
 .content {
   text-align: center;
   max-width: 90%;
@@ -157,9 +249,9 @@ body::before {
   padding: 1.5rem;
   box-sizing: border-box;
   color: #e2e8f0;
+  width: 100%; /* Ensure content takes full width */
 }
 
-/* Special handling for scrollable content like Learning Journey */
 .scrollable-content {
   text-align: center;
   max-width: 90%;
@@ -171,9 +263,10 @@ body::before {
   scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
   color: #e2e8f0;
+  width: 100%; /* Ensure content takes full width */
 }
 
-/* Enhanced typography */
+/* TYPOGRAPHY */
 h1, h2 {
   color: #f1f5f9;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
@@ -202,7 +295,7 @@ p {
   font-size: 1rem;
 }
 
-/* Intro-specific styles */
+/* INTRO SECTION STYLES */
 .exploring-section h2 {
   margin-bottom: 1.5rem;
   font-size: 1.8rem;
@@ -244,7 +337,6 @@ p {
   color: #34d399;
 }
 
-/* Enhanced AI statement box */
 .ai-statement {
   color: #f1f5f9;
   margin: 2rem 0;
@@ -283,7 +375,7 @@ p {
   font-style: italic;
 }
 
-/* Enhanced custom scrollbar */
+/* CUSTOM SCROLLBARS */
 .scrollable-content::-webkit-scrollbar {
   width: 8px;
 }
@@ -304,7 +396,6 @@ p {
   box-shadow: 0 0 10px rgba(59, 130, 246, 0.4);
 }
 
-/* Firefox scrollbar styling */
 .scrollable-content {
   scrollbar-width: thin;
   scrollbar-color: rgba(59, 130, 246, 0.6) rgba(30, 41, 59, 0.3);
@@ -315,7 +406,6 @@ p {
   padding-bottom: 2rem;
 }
 
-/* Legacy scrollbar compatibility */
 .content::-webkit-scrollbar {
   width: 6px;
 }
@@ -335,7 +425,7 @@ p {
   margin-top: 20%;
 }
 
-/* ===== ENHANCED RESPONSIVE DESIGN ===== */
+/* ENHANCED RESPONSIVE DESIGN - FULL WIDTH GUARANTEED */
 
 /* Large desktop */
 @media (min-width: 1440px) {
@@ -383,53 +473,62 @@ p {
   }
 }
 
-/* Mobile and small tablet - NATURAL SCROLLING LAYOUT */
+/* Mobile and small tablet - FULL WIDTH MOBILE LAYOUT */
 @media (max-width: 768px) {
-  /* IMPORTANT: Enable natural scrolling on mobile */
+  /* CRITICAL: Maintain full width on mobile */
   html, body, #root {
     overflow: auto !important;
     height: auto !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 100% !important;
   }
 
-  /* Body background adjustments for mobile scrolling */
   body::before {
-    position: absolute; /* Changed from fixed to absolute */
-    inset: 0; /* Changed from -15% to 0 for better mobile performance */
+    position: absolute;
+    inset: 0;
   }
 
   .container {
     flex-direction: column;
-    height: auto !important; /* Allow natural height */
-    min-height: 100vh; /* Ensure at least full viewport height */
+    height: auto !important;
+    min-height: 100vh;
     overflow: visible;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 100% !important;
   }
 
-  /* LEFT SECTION BECOMES TOP SECTION - NATURAL HEIGHT */
+  /* FULL WIDTH SECTIONS ON MOBILE */
   .left-section {
     order: 1;
-    height: auto !important; /* Natural height based on content */
-    min-height: auto; /* Remove minimum height constraints */
+    height: auto !important;
+    min-height: auto;
     max-height: none;
-    padding: 4.5rem;
+    padding: 2rem 1rem;
     border-right: none;
     border-bottom: 2px solid rgba(59, 130, 246, 0.3);
     background: rgba(15, 23, 42, 0.4);
-    display: block; /* Change from flex to block for natural flow */
-    overflow: visible; /* Allow content to flow naturally */
+    display: block;
+    overflow: visible;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 100% !important;
   }
 
-  /* RIGHT SECTION BECOMES BOTTOM SECTION - NATURAL HEIGHT */
   .right-section {
     order: 2;
-    height: auto !important; /* Natural height based on content */
-    min-height: auto; /* Remove minimum height constraints */
-    padding: 1.5rem;
-    overflow: visible !important; /* Allow natural overflow */
+    height: auto !important;
+    min-height: auto;
+    padding: 1.5rem 1rem;
+    overflow: visible !important;
     background: rgba(30, 41, 59, 0.3);
-    display: block; /* Change from flex to block for natural flow */
+    display: block;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 100% !important;
   }
 
-  /* Adjust glass background for mobile */
   .right-section::before {
     position: absolute;
     top: 15px;
@@ -441,48 +540,49 @@ p {
     border: 1px solid rgba(59, 130, 246, 0.4);
   }
 
-  /* Mobile content adjustments - NATURAL SIZING */
+  /* FULL WIDTH CONTENT ON MOBILE */
   .content, .scrollable-content {
-    max-width: 95%;
+    max-width: 100% !important;
+    width: 100% !important;
     padding: 1rem;
-    height: auto !important; /* Natural height */
-    min-height: auto; /* Remove minimum height */
-    overflow: visible !important; /* No internal scrolling needed */
-    display: block; /* Natural block flow */
+    height: auto !important;
+    min-height: auto;
+    overflow: visible !important;
+    display: block;
+    box-sizing: border-box;
   }
 
-  /* Cube container adjustments for mobile */
   .cube-container {
-    height: auto !important; /* Natural height */
-    position: static; /* Change from relative to static */
-    transform-style: initial; /* Disable 3D transforms on mobile */
+    height: auto !important;
+    position: static;
+    transform-style: initial;
+    width: 100% !important;
   }
 
   .cube-face {
-    position: static !important; /* Natural positioning */
-    width: auto;
+    position: static !important;
+    width: 100% !important;
     height: auto;
-    backface-visibility: visible; /* Show content normally */
-    display: block; /* Natural block display */
+    backface-visibility: visible;
+    display: block;
   }
 
   .cube-face.back {
-    display: none; /* Hide back face on mobile */
+    display: none;
   }
 
   .intro {
-    margin-top: 2rem; /* Reduce top margin */
+    margin-top: 2rem;
   }
 
   .navigation-hint {
-    position: static; /* Natural positioning */
+    position: static;
     margin: 1rem 0;
     font-size: 0.8rem;
     text-align: center;
     width: 100%;
   }
 
-  /* Typography adjustments */
   h1 {
     font-size: 2rem;
   }
@@ -507,14 +607,16 @@ p {
   }
 }
 
-/* Small mobile breakpoint */
+/* Small mobile breakpoint - MAINTAIN FULL WIDTH */
 @media (max-width: 480px) {
   .left-section {
-    padding-bottom: rem;
+    padding: 2rem 0.8rem;
+    width: 100% !important;
   }
 
   .right-section {
-    padding: 1rem;
+    padding: 1rem 0.8rem;
+    width: 100% !important;
   }
 
   .right-section::before {
@@ -527,6 +629,8 @@ p {
 
   .content, .scrollable-content {
     padding: 0.8rem;
+    width: 100% !important;
+    max-width: 100% !important;
   }
 
   h1 {
@@ -557,14 +661,16 @@ p {
   }
 }
 
-/* Very small screens */
+/* Very small screens - CRITICAL FULL WIDTH */
 @media (max-width: 320px) {
   .left-section {
-    padding: 4rem 1rem;
+    padding: 1.5rem 0.5rem;
+    width: 100% !important;
   }
 
   .right-section {
-    padding: 0.8rem;
+    padding: 0.8rem 0.5rem;
+    width: 100% !important;
   }
 
   .right-section::before {
@@ -577,10 +683,12 @@ p {
 
   .content, .scrollable-content {
     padding: 0.6rem;
+    width: 100% !important;
+    max-width: 100% !important;
   }
 
   h1 {
-    font-size: 1.3rem;
+    font-size: 1.5rem;
   }
   
   h2 {
@@ -605,30 +713,13 @@ p {
   }
 }
 
-/* Enhanced animations and interactions */
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.content, .scrollable-content {
-  animation: fadeInUp 0.6s ease-out;
-}
-
-/* Focus states for better accessibility */
+/* ACCESSIBILITY AND INTERACTION ENHANCEMENTS */
 *:focus {
   outline: 2px solid #60a5fa;
   outline-offset: 2px;
   border-radius: 4px;
 }
 
-/* Selection styling */
 ::selection {
   background: rgba(59, 130, 246, 0.3);
   color: #f1f5f9;
@@ -639,7 +730,7 @@ p {
   color: #f1f5f9;
 }
 
-/* Aurora background container */
+/* AURORA BACKGROUND */
 .aurora-bg {
   position: absolute;
   top: 0;
@@ -650,10 +741,9 @@ p {
   background: radial-gradient(circle at 30% 30%, rgba(59,130,246,0.15), transparent 60%),
               radial-gradient(circle at 70% 40%, rgba(147,51,234,0.15), transparent 60%),
               radial-gradient(circle at 50% 70%, rgba(16,185,129,0.15), transparent 70%);
-  z-index: -2; /* stays behind everything */
+  z-index: -2;
 }
 
-/* Add a moving blur layer to simulate aurora */
 .aurora-bg::before {
   content: "";
   position: absolute;
@@ -675,4 +765,54 @@ p {
 @keyframes auroraMove {
   0%   { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
+}
+/* Add these rules to your App.css to prevent dragging */
+
+/* Prevent text selection and dragging on all elements */
+* {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-user-drag: none;
+  -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Fix container positioning */
+.container {
+  position: fixed; /* Change from relative to fixed */
+  top: 0;
+  left: 0;
+  width: 100vw !important;
+  height: 100vh !important;
+  overflow: hidden;
+  /* ... keep your existing styles ... */
+}
+
+/* Prevent dragging on images and profile photo */
+img {
+  -webkit-user-drag: none;
+  -moz-user-drag: none;
+  user-drag: none;
+  pointer-events: none; /* If images are not clickable */
+}
+
+/* If you need text to be selectable in certain areas, re-enable it */
+.selectable-text {
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+  user-select: text;
+}
+
+/* Prevent dragging on the circular navigation */
+.circular-navigation, 
+.navigation-wheel,
+.cube-container,
+.cube-face {
+  -webkit-user-drag: none;
+  user-drag: none;
+  -webkit-user-select: none;
+  user-select: none;
 }
