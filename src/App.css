@@ -9,46 +9,17 @@ html, body, #root {
   min-width: 100% !important;
   height: 100%;
   margin: 0;
-  padding: 0;
-  overflow-x: hidden; /* Prevent horizontal scroll */
+  padding: 0;/* Prevent horizontal scroll */
   font-family: 'Inter', 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
-#root {
-  position: relative;
-  z-index: 1;
-}
+
 
 body {
   background: linear-gradient(135deg, #040810, #0f1621, #14181d);
   color: #e2e8f0;
 }
 
-body::before {
-  content: "";
-  position: fixed;
-  inset: -15%;
-  z-index: 0;
-  pointer-events: none;
-  filter: blur(80px) saturate(120%);
-  opacity: 0.9;
-  transform: translateZ(0);
-  will-change: transform;
-  background:
-    radial-gradient(30rem 30rem at 20% 60%, rgba(59,130,246,0.18), transparent 60%),
-    radial-gradient(32rem 32rem at 80% 30%, rgba(147,51,234,0.16), transparent 60%),
-    radial-gradient(28rem 28rem at 45% 80%, rgba(16,185,129,0.16), transparent 60%),
-    conic-gradient(from 0deg at 50% 50%,
-      rgba(59,130,246,0.08),
-      rgba(147,51,234,0.10),
-      rgba(16,185,129,0.08),
-      rgba(59,130,246,0.08));
-  animation: auroraSpin 55s linear infinite;
-}
-
-@keyframes auroraSpin {
-  to { transform: rotate(360deg) scale(1.05); }
-}
 
 .container {
   display: flex;
@@ -58,23 +29,10 @@ body::before {
   min-width: 100% !important;
   background: linear-gradient(135deg, #040810, #0f1621, #181d23);
   position: relative;
-  overflow-x: hidden; /* Prevent any horizontal overflow */
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
-.container::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: 
-    radial-gradient(circle at 20% 50%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
-    radial-gradient(circle at 80% 20%, rgba(147, 51, 234, 0.1) 0%, transparent 50%),
-    radial-gradient(circle at 40% 80%, rgba(16, 185, 129, 0.1) 0%, transparent 50%);
-  pointer-events: none;
-  z-index: 0;
-}
 
 /* SECTIONS - GUARANTEED FULL WIDTH */
 .left-section, .right-section {
@@ -497,6 +455,7 @@ p {
     width: 100% !important;
     max-width: 100% !important;
     min-width: 100% !important;
+    overflow-x: hidden;
   }
 
   /* FULL WIDTH SECTIONS ON MOBILE */
@@ -505,7 +464,7 @@ p {
     height: auto !important;
     min-height: auto;
     max-height: none;
-    padding: 2rem 1rem;
+    padding-top: 90px;
     border-right: none;
     border-bottom: 2px solid rgba(59, 130, 246, 0.3);
     background: rgba(15, 23, 42, 0.4);
@@ -514,6 +473,7 @@ p {
     width: 100% !important;
     max-width: 100% !important;
     min-width: 100% !important;
+    padding-bottom: 4.5rem;
   }
 
   .right-section {
@@ -610,7 +570,7 @@ p {
 /* Small mobile breakpoint - MAINTAIN FULL WIDTH */
 @media (max-width: 480px) {
   .left-section {
-    padding: 2rem 0.8rem;
+    padding-top: 4rem 0.8rem;
     width: 100% !important;
   }
 
@@ -664,7 +624,7 @@ p {
 /* Very small screens - CRITICAL FULL WIDTH */
 @media (max-width: 320px) {
   .left-section {
-    padding: 1.5rem 0.5rem;
+    padding-bottom: 4rem;
     width: 100% !important;
   }
 
@@ -777,42 +737,4 @@ p {
   -webkit-user-drag: none;
   -webkit-touch-callout: none;
   -webkit-tap-highlight-color: transparent;
-}
-
-/* Fix container positioning */
-.container {
-  position: fixed; /* Change from relative to fixed */
-  top: 0;
-  left: 0;
-  width: 100vw !important;
-  height: 100vh !important;
-  overflow: hidden;
-  /* ... keep your existing styles ... */
-}
-
-/* Prevent dragging on images and profile photo */
-img {
-  -webkit-user-drag: none;
-  -moz-user-drag: none;
-  user-drag: none;
-  pointer-events: none; /* If images are not clickable */
-}
-
-/* If you need text to be selectable in certain areas, re-enable it */
-.selectable-text {
-  -webkit-user-select: text;
-  -moz-user-select: text;
-  -ms-user-select: text;
-  user-select: text;
-}
-
-/* Prevent dragging on the circular navigation */
-.circular-navigation, 
-.navigation-wheel,
-.cube-container,
-.cube-face {
-  -webkit-user-drag: none;
-  user-drag: none;
-  -webkit-user-select: none;
-  user-select: none;
 }
