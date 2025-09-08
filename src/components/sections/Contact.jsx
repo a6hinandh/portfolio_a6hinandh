@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { FaUser, FaEnvelope, FaCommentDots, FaPaperPlane, FaSpinner, FaTimes, FaCheckCircle, FaExclamationTriangle } from 'react-icons/fa';
+import { send } from '@emailjs/browser';
+
 
 function Contact() {
   const [formData, setFormData] = useState({
@@ -30,26 +32,30 @@ function Contact() {
   setStatus("");
   setIsSubmitting(true);
 
-  emailjs.send(
-    serviceId,
-    templateId,
-    {
-      name: formData.name,
-      email: formData.email,
-      message: formData.message
-    },
-    publicKey
-  ).then((response) => {
-    console.log('SUCCESS!', response.status, response.text);
-    setStatus("success");
-    setFormData({ name: "", email: "", message: "" });
-  }, (error) => {
-    console.error('FAILED...', error);
-    setStatus("error");
-  }).finally(() => {
-    setIsSubmitting(false);
-    setShowModal(true);
-  });
+  send(
+  serviceId,
+  templateId,
+  {
+    name: formData.name,
+    email: formData.email,
+    message: formData.message
+  },
+  publicKey
+)
+.then((response) => {
+  console.log('SUCCESS!', response.status, response.text);
+  setStatus("success");
+  setFormData({ name: "", email: "", message: "" });
+})
+.catch((error) => {
+  console.error('FAILED...', error);
+  setStatus("error");
+})
+.finally(() => {
+  setIsSubmitting(false);
+  setShowModal(true);
+});
+
 };
 
 
