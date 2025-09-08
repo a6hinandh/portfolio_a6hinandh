@@ -13,6 +13,10 @@ function Contact() {
   const backendUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000';
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+  const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+  const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+
 
   const handleChange = (e) => {
     setFormData({ 
@@ -21,32 +25,33 @@ function Contact() {
     });
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setStatus("");
-    setIsSubmitting(true);
+  const handleSubmit = (e) => {
+  e.preventDefault();
+  setStatus("");
+  setIsSubmitting(true);
 
-    try {
-      const res = await fetch(`${backendUrl}/api/contact`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData)
-      });
+  emailjs.send(
+    serviceId,
+    templateId,
+    {
+      name: formData.name,
+      email: formData.email,
+      message: formData.message
+    },
+    publicKey
+  ).then((response) => {
+    console.log('SUCCESS!', response.status, response.text);
+    setStatus("success");
+    setFormData({ name: "", email: "", message: "" });
+  }, (error) => {
+    console.error('FAILED...', error);
+    setStatus("error");
+  }).finally(() => {
+    setIsSubmitting(false);
+    setShowModal(true);
+  });
+};
 
-      if (res.ok) {
-        setStatus("success");
-        setFormData({ name: "", email: "", message: "" });
-      } else {
-        setStatus("error");
-      }
-    } catch (error) {
-      console.error(error);
-      setStatus("error");
-    } finally {
-      setIsSubmitting(false);
-      setShowModal(true);
-    }
-  };
 
   const closeModal = () => {
     setShowModal(false);
