@@ -3,6 +3,7 @@ import { FaUser, FaEnvelope, FaCommentDots, FaPaperPlane, FaSpinner, FaTimes, Fa
 import { send } from '@emailjs/browser';
 
 
+
 function Contact() {
   const [formData, setFormData] = useState({
     name: "",

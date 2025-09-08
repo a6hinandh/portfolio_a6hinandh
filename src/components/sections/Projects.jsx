@@ -16,7 +16,7 @@ function Projects() {
       description: 'A dynamic, constraint-aware School Timetable Generator built to automate and optimize academic scheduling in real time. Features intelligent conflict resolution, teacher availability tracking, etc.',
       type: 'video',
       media: './demo1.mp4',
-      technologies: ['React', 'Node.js', 'MongoDB', 'Algorithm Design'],
+      technologies: ['React', 'FastAPI', 'MongoDB', 'Algorithm Design'],
       links: [
         { icon: FaGithub, text: 'View Code', url: 'https://github.com/a6hinandh/School_TimeTable_Generator' },
         { icon: FaExternalLinkAlt, text: 'Live Demo', url: 'https://timetable-generator-t4h3.onrender.com' },
@@ -34,6 +34,19 @@ function Projects() {
         { icon: FaGithub, text: 'View Code', url: 'https://github.com/VioniX37/EcoByte' },
         { icon: FaExternalLinkAlt, text: 'Live App', url: 'https://ecobyte-web.netlify.app' },
         { icon: FaLinkedin, text: 'Case Study', url: 'https://www.linkedin.com/posts/abhinandh-a-0a624a332_ecobyte-vionix-googlesolutionchallenge-activity-7335274271541202946-Ukz_?utm_source=share&utm_medium=member_desktop&rcm=ACoAAFOvf_4BAIsszhcVezftr44cyMq7VCSUvGo' }
+      ]
+    },
+    {
+      id: 'fined',
+      title: 'FinEd - AI-Powered Financial Education Platform',
+      description: 'An AI-powered financial education platform designed to make finance simple, interactive, and practical for everyone.',
+      type: 'youtube',
+      media: 'https://www.youtube.com/embed/1QaKuIKHQtE?autoplay=0&mute=1&loop=1&playlist=1QaKuIKHQtE&controls=1&modestbranding=1&rel=0&enablejsapi=1',
+      technologies: ['React','Node.js', 'Firebase', 'AI/ML'],
+      links: [
+        { icon: FaGithub, text: 'View Code', url: 'https://github.com/a6hinandh/FinEd' },
+        { icon: FaExternalLinkAlt, text: 'Live App', url: 'https://fined-7zy8.onrender.com' },
+        { icon: FaLinkedin, text: 'Case Study', url: '' }
       ]
     }
   ];
